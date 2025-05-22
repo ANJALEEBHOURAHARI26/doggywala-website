@@ -10,7 +10,5 @@
 
 ![Screenshot (1899)](https://github.com/user-attachments/assets/00013739-e062-424e-8464-6eb4a7d4a7d1)
 
-![Screenshot (1905)](https://github.com/user-attachments/assets/031e9b12-4969-426d-a83a-04e13385504c)
 
-![Screenshot (1903)](https://github.com/user-attachments/assets/3c2e2a50-b338-48aa-8ded-d16652ba8ca7)
 
