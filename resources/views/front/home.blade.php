@@ -51,7 +51,7 @@
           <div class="container">
             <h1 class="text-white">Find Your Perfect Pet</h1>
             <p class="text-white">Thousands of pets looking for loving homes.</p>
-            <a href="#" class="btn btn-primary mt-3">Adopt Now</a>
+            <!-- <a href="#" class="btn btn-primary mt-3">Adopt Now</a> -->
           </div>
         </div>
       </div>
@@ -62,7 +62,7 @@
           <div class="container">
             <h1 class="text-white">Cute Puppies for Sale</h1>
             <p class="text-white">Browse our newest litters today!</p>
-            <a href="#" class="btn btn-primary mt-3">View Puppies</a>
+            <!-- <a href="#" class="btn btn-primary mt-3">View Puppies</a> -->
           </div>
         </div>
       </div>
@@ -73,7 +73,7 @@
           <div class="container">
             <h1 class="text-white">Professional Grooming Services</h1>
             <p class="text-white">Book a spa day for your pet!</p>
-            <a href="#" class="btn btn-primary mt-3">Book Now</a>
+            <!-- <a href="#" class="btn btn-primary mt-3">Book Now</a> -->
           </div>
         </div>
       </div>

@@ -29,9 +29,20 @@
 					<li class="nav-item">
 						<a class="nav-link" aria-current="page" href="{{ route('home') }}">Home</a>
 					</li>	
-					<li class="nav-item">
-						<a class="nav-link" aria-current="page" href="{{ route('home') }}">Available Puppies</a>
+					
+					<li class="nav-item dropdown">
+					    <a class="nav-link dropdown-toggle" href="#" id="availablePuppiesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+					        Available Puppies
+					    </a>
+					   <ul class="dropdown-menu" aria-labelledby="availablePuppiesDropdown">
+    <li><a class="dropdown-item" href="{{ route('available-puppies.city', ['city' => 'delhi']) }}">Delhi</a></li>
+    <li><a class="dropdown-item" href="{{ route('available-puppies.city', ['city' => 'mumbai']) }}">Mumbai</a></li>
+    <li><a class="dropdown-item" href="{{ route('available-puppies.city', ['city' => 'bangalore']) }}">Bangalore</a></li>
+    <li><a class="dropdown-item" href="{{ route('available-puppies.city', ['city' => 'hyderabad']) }}">Hyderabad</a></li>
+</ul>
+
 					</li>
+
 					<li class="nav-item">
 						<a class="nav-link" aria-current="page" href="{{route('blogs')}}">Blog</a>
 					</li>
@@ -46,7 +57,7 @@
 					</li>	 -->									
 				</ul>
 
-                @if (!Auth::check())
+            <!--     @if (!Auth::check())
 				<a class="btn btn-outline-primary me-2" href="{{ route('account.login') }}" type="submit">Login</a>
 			    @else
 				    @if (Auth::user()->role == 'admin')
@@ -54,7 +65,7 @@
 					@endif
 				    <a class="btn btn-outline-primary me-2" href="{{ route('account.profile') }}" type="submit">Account</a>
 				@endif
-				<a class="btn btn-primary" href="" type="submit">Post a Dog</a>
+				<a class="btn btn-primary" href="" type="submit">Post a Dog</a> -->
 				
 			</div>
 		</div>

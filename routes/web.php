@@ -19,6 +19,11 @@ use Illuminate\Support\Facades\Route;
 */
 Route::get('/blogs', [HomeController::class, 'blogs'])->name('blogs');
 Route::get('/contact-us', [HomeController::class, 'contactUs'])->name('conract-us');
+// Route::get('/available-puppies', [HomeController::class, 'availablePuppies'])->name('available-puppies');
+Route::get('/available-puppies/{city}', function($city) {
+    return view('front.available-puppies', compact('city'));
+})->name('available-puppies.city');
+
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/search_pet', [HomeController::class, 'search'])->name('pets');

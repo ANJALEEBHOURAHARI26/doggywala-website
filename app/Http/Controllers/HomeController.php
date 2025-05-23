@@ -83,6 +83,10 @@ public function contactUs()
 {
     return view('front.contact');
 }
+public function availablePuppies()
+{
+    return view('front.available-puppies');
+}
 
 
 }
