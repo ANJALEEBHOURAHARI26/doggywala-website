@@ -221,120 +221,66 @@
             <div class="pet_listing_area">                    
                 <div class="pet_lists">
                     <div class="row">
+                         @php
+                                        use Illuminate\Support\Str;
+                                    @endphp
+                        @foreach($featuredPets as $pet)
                         <div class="col-md-4">
                             <div class="card border-0 p-3 shadow mb-4">
                                 <div class="card-body">
-                                    <h3 class="border-0 fs-5 pb-2 mb-0">Golden Retriever</h3>
-                                    <p>Friendly and energetic. Looking for a loving home.</p>
+                                    <h3 class="border-0 fs-5 pb-2 mb-0">{{ $pet->name }}</h3>
+                                  
+
+                                    <p>{{ Str::limit($pet->description, 50, '...') }}</p>
+                                    
                                     <div class="bg-light p-3 border">
                                         <p class="mb-0">
                                             <span class="fw-bolder"><i class="fa fa-map-marker"></i></span>
-                                            <span class="ps-1">Location: New York</span>
+                                            <span class="ps-1">Location: {{ $pet->location }}</span>
                                         </p>
                                         <p class="mb-0">
                                             <span class="fw-bolder"><i class="fa fa-heart"></i></span>
-                                            <span class="ps-1">Age: 2 years</span>
+                                            <span class="ps-1">Age: {{ $pet->age }} years</span>
                                         </p>
                                         <p class="mb-0">
                                             <span class="fw-bolder"><i class="fa fa-paw"></i></span>
-                                            <span class="ps-1">Breed: Golden Retriever</span>
+                                            <span class="ps-1">Breed: {{ $pet->breed }}</span>
                                         </p>
                                     </div>
 
                                     <div class="d-grid mt-3">
-                                        <a href="" class="btn btn-primary btn-lg">Details</a>
+                                        <a href="{{route('pet.details',$pet->location)}}" class="btn btn-primary btn-lg">Details</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-                        <div class="col-md-4">
-                            <div class="card border-0 p-3 shadow mb-4">
-                                <div class="card-body">
-                                    <h3 class="border-0 fs-5 pb-2 mb-0">Bulldog</h3>
-                                    <p>Calm and loving. Perfect companion for families.</p>
-                                    <div class="bg-light p-3 border">
-                                        <p class="mb-0">
-                                            <span class="fw-bolder"><i class="fa fa-map-marker"></i></span>
-                                            <span class="ps-1">Location: Texas</span>
-                                        </p>
-                                        <p class="mb-0">
-                                            <span class="fw-bolder"><i class="fa fa-heart"></i></span>
-                                            <span class="ps-1">Age: 3 years</span>
-                                        </p>
-                                        <p class="mb-0">
-                                            <span class="fw-bolder"><i class="fa fa-paw"></i></span>
-                                            <span class="ps-1">Breed: Bulldog</span>
-                                        </p>
-                                    </div>
-
-                                    <div class="d-grid mt-3">
-                                        <a href="" class="btn btn-primary btn-lg">Details</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-4">
-                            <div class="card border-0 p-3 shadow mb-4">
-                                <div class="card-body">
-                                    <h3 class="border-0 fs-5 pb-2 mb-0">Beagle</h3>
-                                    <p>Curious and friendly. Great for active families.</p>
-                                    <div class="bg-light p-3 border">
-                                        <p class="mb-0">
-                                            <span class="fw-bolder"><i class="fa fa-map-marker"></i></span>
-                                            <span class="ps-1">Location: Florida</span>
-                                        </p>
-                                        <p class="mb-0">
-                                            <span class="fw-bolder"><i class="fa fa-heart"></i></span>
-                                            <span class="ps-1">Age: 4 years</span>
-                                        </p>
-                                        <p class="mb-0">
-                                            <span class="fw-bolder"><i class="fa fa-paw"></i></span>
-                                            <span class="ps-1">Breed: Beagle</span>
-                                        </p>
-                                    </div>
-
-                                    <div class="d-grid mt-3">
-                                        <a href="" class="btn btn-primary btn-lg">Details</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-4">
-                            <div class="card border-0 p-3 shadow mb-4">
-                                <div class="card-body">
-                                    <h3 class="border-0 fs-5 pb-2 mb-0">Rottweiler</h3>
-                                    <p>Strong and loyal. Great guard dog and companion.</p>
-                                    <div class="bg-light p-3 border">
-                                        <p class="mb-0">
-                                            <span class="fw-bolder"><i class="fa fa-map-marker"></i></span>
-                                            <span class="ps-1">Location: Ohio</span>
-                                        </p>
-                                        <p class="mb-0">
-                                            <span class="fw-bolder"><i class="fa fa-heart"></i></span>
-                                            <span class="ps-1">Age: 6 years</span>
-                                        </p>
-                                        <p class="mb-0">
-                                            <span class="fw-bolder"><i class="fa fa-paw"></i></span>
-                                            <span class="ps-1">Breed: Rottweiler</span>
-                                        </p>
-                                    </div>
-
-                                    <div class="d-grid mt-3">
-                                        <a href="" class="btn btn-primary btn-lg">Details</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
+                        @endforeach
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
+
+<!-- @foreach($featuredPets as $pet)
+<div class="col-md-4">
+    <div class="card border-0 p-3 shadow mb-4">
+        <div class="card-body">
+            <h3 class="border-0 fs-5 pb-2 mb-0">{{ $pet->name }}</h3>
+            <p>{{ $pet->description }}</p>
+            <div class="bg-light p-3 border">
+                <p class="mb-0"><strong><i class="fa fa-map-marker"></i></strong> <span class="ps-1">Location: {{ $pet->location }}</span></p>
+                <p class="mb-0"><strong><i class="fa fa-heart"></i></strong> <span class="ps-1">Age: {{ $pet->age }} years</span></p>
+                <p class="mb-0"><strong><i class="fa fa-paw"></i></strong> <span class="ps-1">Breed: {{ $pet->breed }}</span></p>
+            </div>
+            <div class="d-grid mt-3">
+                <a href="" class="btn btn-primary btn-lg">Details</a>
+            </div>
+        </div>
+    </div>
+</div>
+@endforeach
+ -->
 
 
 <section class="section-3 bg-2 py-5">
@@ -344,114 +290,35 @@
             <div class="pet_listing_area">                    
                 <div class="pet_lists">
                     <div class="row">
+                        @foreach($latestPets as $pet)
                         <div class="col-md-4">
                             <div class="card border-0 p-3 shadow mb-4">
                                 <div class="card-body">
-                                    <h3 class="border-0 fs-5 pb-2 mb-0">Bella</h3>
-                                    <p>A friendly Golden Retriever looking for a loving home.</p>
+                                    <h3 class="border-0 fs-5 pb-2 mb-0">{{ $pet->name }}</h3>
+                                   <p>{{ Str::limit($pet->description, 50, '...') }}</p>
+                                    
                                     <div class="bg-light p-3 border">
                                         <p class="mb-0">
                                             <span class="fw-bolder"><i class="fa fa-paw"></i></span>
-                                            <span class="ps-1">Type: Dog</span>
+                                            <span class="ps-1">Type: {{ $pet->type }}</span>
                                         </p>
                                         <p class="mb-0">
                                             <span class="fw-bolder"><i class="fa fa-birthday-cake"></i></span>
-                                            <span class="ps-1">Age: 2 years</span>
+                                            <span class="ps-1">Age: {{ $pet->age }} years</span>
                                         </p>
                                         <p class="mb-0">
                                             <span class="fw-bolder"><i class="fa fa-map-marker"></i></span>
-                                            <span class="ps-1">Location: Noida</span>
+                                            <span class="ps-1">Location: {{ $pet->location }}</span>
                                         </p>
                                     </div>
 
                                     <div class="d-grid mt-3">
-                                        <a href="" class="btn btn-primary btn-lg">Details</a>
+                                        <a href="{{route('pet.details',$pet->location)}}" class="btn btn-primary btn-lg">Details</a>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="col-md-4">
-                            <div class="card border-0 p-3 shadow mb-4">
-                                <div class="card-body">
-                                    <h3 class="border-0 fs-5 pb-2 mb-0">Max</h3>
-                                    <p>Energetic Beagle in need of an active family.</p>
-                                    <div class="bg-light p-3 border">
-                                        <p class="mb-0">
-                                            <span class="fw-bolder"><i class="fa fa-paw"></i></span>
-                                            <span class="ps-1">Type: Dog</span>
-                                        </p>
-                                        <p class="mb-0">
-                                            <span class="fw-bolder"><i class="fa fa-birthday-cake"></i></span>
-                                            <span class="ps-1">Age: 1 year</span>
-                                        </p>
-                                        <p class="mb-0">
-                                            <span class="fw-bolder"><i class="fa fa-map-marker"></i></span>
-                                            <span class="ps-1">Location: Noida</span>
-                                        </p>
-                                    </div>
-
-                                    <div class="d-grid mt-3">
-                                        <a href="" class="btn btn-primary btn-lg">Details</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-4">
-                            <div class="card border-0 p-3 shadow mb-4">
-                                <div class="card-body">
-                                    <h3 class="border-0 fs-5 pb-2 mb-0">Charlie</h3>
-                                    <p>Playful Labrador looking for a fun-loving home.</p>
-                                    <div class="bg-light p-3 border">
-                                        <p class="mb-0">
-                                            <span class="fw-bolder"><i class="fa fa-paw"></i></span>
-                                            <span class="ps-1">Type: Dog</span>
-                                        </p>
-                                        <p class="mb-0">
-                                            <span class="fw-bolder"><i class="fa fa-birthday-cake"></i></span>
-                                            <span class="ps-1">Age: 4 years</span>
-                                        </p>
-                                        <p class="mb-0">
-                                            <span class="fw-bolder"><i class="fa fa-map-marker"></i></span>
-                                            <span class="ps-1">Location: Noida</span>
-                                        </p>
-                                    </div>
-
-                                    <div class="d-grid mt-3">
-                                        <a href="" class="btn btn-primary btn-lg">Details</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-4">
-                            <div class="card border-0 p-3 shadow mb-4">
-                                <div class="card-body">
-                                    <h3 class="border-0 fs-5 pb-2 mb-0">Rocky</h3>
-                                    <p>Charming Bulldog ready for a new adventure.</p>
-                                    <div class="bg-light p-3 border">
-                                        <p class="mb-0">
-                                            <span class="fw-bolder"><i class="fa fa-paw"></i></span>
-                                            <span class="ps-1">Type: Dog</span>
-                                        </p>
-                                        <p class="mb-0">
-                                            <span class="fw-bolder"><i class="fa fa-birthday-cake"></i></span>
-                                            <span class="ps-1">Age: 5 years</span>
-                                        </p>
-                                        <p class="mb-0">
-                                            <span class="fw-bolder"><i class="fa fa-map-marker"></i></span>
-                                            <span class="ps-1">Location: Noida</span>
-                                        </p>
-                                    </div>
-
-                                    <div class="d-grid mt-3">
-                                        <a href="" class="btn btn-primary btn-lg">Details</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                                                 
+                        </div> 
+                        @endforeach                
                     </div>
                 </div>
             </div>
@@ -460,66 +327,6 @@
 </section>
 
 
-<!-- resources/views/contact.blade.php -->
-
-<!-- <section class="contact-section py-5" style="background-color: #f3f4f6;">
-    <div class="container">
-        <h2 class="text-center mb-5" style="font-weight: 600;">Contact Us</h2>
-        
-        <div class="row text-center mb-5">
-            <div class="col-md-4 mb-4">
-                <div class="p-4 bg-white shadow rounded">
-                    <i class="fas fa-map-marker-alt fa-2x mb-3 text-primary"></i>
-                    <h5 class="fw-bold">Address</h5>
-                    <p class="text-muted mb-0">123 Dog Street, Paw City, IN 45678</p>
-                </div>
-            </div>
-
-            <div class="col-md-4 mb-4">
-                <div class="p-4 bg-white shadow rounded">
-                    <i class="fas fa-phone fa-2x mb-3 text-primary"></i>
-                    <h5 class="fw-bold">Phone</h5>
-                    <p class="text-muted mb-0">+91 9876543210</p>
-                </div>
-            </div>
-
-            <div class="col-md-4 mb-4">
-                <div class="p-4 bg-white shadow rounded">
-                    <i class="fas fa-envelope fa-2x mb-3 text-primary"></i>
-                    <h5 class="fw-bold">Email</h5>
-                    <p class="text-muted mb-0">info@dogservice.com</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="p-4 bg-white shadow rounded">
-                    <form method="POST" action="">
-                        @csrf
-
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Your Name</label>
-                            <input type="text" name="name" class="form-control" required />
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Your Email</label>
-                            <input type="email" name="email" class="form-control" required />
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="message" class="form-label">Your Message</label>
-                            <textarea name="message" rows="4" class="form-control" required></textarea>
-                        </div>
-
-                        <button type="submit" class="btn btn-primary px-4">Send Message</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</section> -->
 
 <section class="contact-info-section py-5" style="background-color: var(--bs-body-bg);">
     <div class="container">

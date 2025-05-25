@@ -48,27 +48,40 @@ textarea.form-control {
     <h2 class="text-center mb-5 fw-bold" style="color: #1f2e4d;">Contact Us</h2>
     <div class="row">
       <!-- Left: Contact Form -->
-      <div class="col-md-7">
-        <form>
-          <div class="row mb-3">
+     @if(session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
+
+<div class="col-md-7">
+    <form method="POST" action="{{ route('contact.send') }}" onsubmit="disableButton()">
+        @csrf
+
+        <div class="row mb-3">
             <div class="col">
-              <input type="text" class="form-control" placeholder="Your Name:">
+                <input type="text" name="name" class="form-control" placeholder="Your Name:" required>
             </div>
             <div class="col">
-              <input type="text" class="form-control" placeholder="Telephone:">
+                <input type="text" name="phone" class="form-control" placeholder="Phone Number:">
             </div>
-          </div>
-          <div class="mb-3">
-            <input type="email" class="form-control" placeholder="Email:">
-          </div>
-          <div class="mb-3">
-            <textarea class="form-control" rows="5" placeholder="Message:"></textarea>
-          </div>
-          <button type="submit" class="btn text-white px-4 py-2" style="background-color: #eac94f; border-radius: 8px; box-shadow: 2px 2px 10px rgba(0,0,0,0.1); font-weight: bold;">
-            SEND MESSAGE
-          </button>
-        </form>
-      </div>
+        </div>
+
+        <div class="mb-3">
+            <input type="email" name="email" class="form-control" placeholder="Email:" required>
+        </div>
+
+        <div class="mb-3">
+            <textarea class="form-control" name="message" rows="5" placeholder="Message:" required></textarea>
+        </div>
+
+        <button type="submit" id="submitBtn" class="btn text-white px-4 py-2" style="background-color: #eac94f; border-radius: 8px; box-shadow: 2px 2px 10px rgba(0,0,0,0.1); font-weight: bold;">
+          SEND MESSAGE
+        </button>
+
+    </form>
+</div>
+
 
       <!-- Right: Info Box -->
       <div class="col-md-5 mt-5 mt-md-0">
@@ -92,3 +105,10 @@ textarea.form-control {
 
 
 @endsection
+<script>
+  function disableButton() {
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Sending...';
+  }
+</script>

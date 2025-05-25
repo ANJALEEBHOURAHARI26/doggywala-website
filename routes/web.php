@@ -32,16 +32,14 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('admin.logout')
 
 Route::get('/blogs', [HomeController::class, 'blogs'])->name('blogs');
 Route::get('/contact-us', [HomeController::class, 'contactUs'])->name('conract-us');
-// Route::get('/available-puppies', [HomeController::class, 'availablePuppies'])->name('available-puppies');
-// Route::get('/available-puppies/{city}', function($city) {
-//     return view('front.available-puppies', compact('city'));
-// })->name('available-puppies.city');
+Route::post('/contact', [HomeController::class, 'send'])->name('contact.send');
 
 Route::get('/available-puppies/{city}',[HomeController::class, 'availablePuppies'])->name('available-puppies.city');
 
 Route::get('/available-puppies-search', [HomeController::class, 'searchPuppies'])->name('available-puppies.search');
 
 
+Route::get('/pet-details/{city}', [HomeController::class, 'show'])->name('pet.details');
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/search_pet', [HomeController::class, 'search'])->name('pets');
@@ -56,6 +54,9 @@ Route::group(['prefix' => 'admin','middleware' => 'checkRole'], function(){
     Route::get('/pets',[PetController::class,'index'])->name('admin.pets');
     Route::get('/pets/edit/{id}',[PetController::class,'edit'])->name('admin.pets.edit');
     Route::put('/pets/{id}',[PetController::class,'updatePet'])->name('admin.jobs.update');
+
+    
+
     });
 
 Route::group(['prefix' => 'account', 'controller' => AccountController::class], function () {
@@ -85,8 +86,11 @@ Route::group(['prefix' => 'account', 'controller' => AccountController::class], 
         Route::any('/saved-pets', 'savedPets')->name('account.savedPets');
         Route::any('/remove-saved-pet/{id}', 'removeSavedPet')->name('removeSavedPet');
         Route::any('/send-feedback', 'sendFeedback')->name('sendFeedback');
+        Route::any('/send-feedback', 'sendFeedback')->name('sendFeedback');
 
-        
+        Route::any('/create-blog', 'createBlog')->name('account.createBlog');
+        Route::any('/save-blog', 'saveBlog')->name('account.saveBlog');
+        Route::any('/blog-list', 'blogList')->name('account.blogList');
 
     });
 });

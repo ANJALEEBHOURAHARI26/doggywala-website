@@ -56,6 +56,25 @@
                                         @enderror
                                     </div>
                                 </div>
+
+                                <div class="row">
+                                   <div class="col-md-6 mb-4">
+                                        <label for="gender" class="mb-2">Gender</label>
+                                        <select name="gender" id="gender" class="form-control">
+                                            <option value="">-- Select Gender --</option>
+                                            <option value="Male" {{ $pet->gender == 'Male' ? 'selected' : '' }}>Male</option>
+                                            <option value="Female" {{ $pet->gender == 'Female' ? 'selected' : '' }}>Female</option>
+
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 mb-4">
+                                        <label for="Price" class="mb-2">Price<span class="req">*</span></label>
+                                        <input type="number" name="price" id="price" value="{{ old('price',$pet->price) }}" class="@error('price') is-invalid  @enderror form-control" min="0" placeholder="Price" required>
+                                        @error('price')
+                                            <p class="invalid-feedback">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                </div>
                     
                                 <div class="row">
                                     <div class="col-md-6 mb-4">
@@ -75,10 +94,18 @@
                                                     @endif
                                     </div>
                                 </div>
+
+                                 <div class="mb-4">
+                                    <label for="description" class="mb-2">Other Details<span class="req">*</span></label>
+                                    <textarea name="other_details" id="other_details" class="@error('other_details') is-invalid  @enderror form-control" rows="5" placeholder="Other Details" required>{{ old('other_details',$pet->other_details) }}</textarea>
+                                    @error('other_details')
+                                            <p class="invalid-feedback">{{ $message }}</p>
+                                    @enderror
+                                </div>
                     
                                 <div class="mb-4">
                                     <label for="description" class="mb-2">Description<span class="req">*</span></label>
-                                    <textarea name="description" id="description" class="@error('description') is-invalid  @enderror form-control" rows="5" placeholder="Description" required>{{ old('description',$pet->description) }}" </textarea>
+                                    <textarea name="description" id="description" class="@error('description') is-invalid  @enderror form-control" rows="5" placeholder="Description" required>{{ old('description',$pet->description) }} </textarea>
                                     @error('description')
                                             <p class="invalid-feedback">{{ $message }}</p>
                                     @enderror

@@ -31,7 +31,10 @@ class PetController extends Controller
             'name' => 'required|max:255',
             'type' => 'required|max:255',
             'age' => 'required|integer|min:0',
+            'price' => 'required|max:255',
+            'gender' => 'required|max:255',
             'location' => 'required|max:50',
+            'other_details' => 'required',
             'description' => 'required',
             'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048' // Updated to validate 'photo'
     ];
@@ -49,7 +52,9 @@ class PetController extends Controller
         $pet->breed = $request->breed;
         $pet->age = $request->age;
         $pet->location = $request->location;
-        
+        $pet->price = $request->price;
+        $pet->gender = $request->gender;
+        $pet->other_details = $request->other_details;
         $pet->description = $request->description;
         $pet->contact_info = $request->contact_info;
         $pet->save();
@@ -74,5 +79,7 @@ class PetController extends Controller
 
         return redirect()->route('admin.pets')->with('success','Pet updated successfully');
     }
+
+
 
 }

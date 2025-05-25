@@ -28,8 +28,15 @@
                 <a href="{{ route('account.savePet') }}">My Pets</a>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                <a href="{{ route('account.savedPets') }}">Saved Pets</a>
+                <a href="{{ route('account.createBlog') }}">Blog</a>
             </li>
+             <!-- <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                <a href="{{ route('account.blogList') }}">Blog</a>
+            </li> -->
+
+           <!--  <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                <a href="{{ route('account.savedPets') }}">Saved Pets</a>
+            </li> -->
             <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                 <a href="{{ route('account.logout') }}">Logout</a>
             </li>                                                         
