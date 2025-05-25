@@ -14,7 +14,12 @@
 	<link rel="shortcut icon" type="image/x-icon" href="#" />
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+	<!-- Toastr CSS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet"/>
 
+<!-- Toastr JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 </head>
 <body data-instant-intensity="mousedown">
 <header>
@@ -35,11 +40,11 @@
 					        Available Puppies
 					    </a>
 					   <ul class="dropdown-menu" aria-labelledby="availablePuppiesDropdown">
-    <li><a class="dropdown-item" href="{{ route('available-puppies.city', ['city' => 'delhi']) }}">Delhi</a></li>
-    <li><a class="dropdown-item" href="{{ route('available-puppies.city', ['city' => 'mumbai']) }}">Mumbai</a></li>
-    <li><a class="dropdown-item" href="{{ route('available-puppies.city', ['city' => 'bangalore']) }}">Bangalore</a></li>
-    <li><a class="dropdown-item" href="{{ route('available-puppies.city', ['city' => 'hyderabad']) }}">Hyderabad</a></li>
-</ul>
+						    <li><a class="dropdown-item" href="{{ route('available-puppies.city', ['city' => 'delhi']) }}">Delhi</a></li>
+						    <li><a class="dropdown-item" href="{{ route('available-puppies.city', ['city' => 'mumbai']) }}">Mumbai</a></li>
+						    <li><a class="dropdown-item" href="{{ route('available-puppies.city', ['city' => 'bangalore']) }}">Bangalore</a></li>
+						    <li><a class="dropdown-item" href="{{ route('available-puppies.city', ['city' => 'hyderabad']) }}">Hyderabad</a></li>
+						</ul>
 
 					</li>
 
@@ -57,7 +62,7 @@
 					</li>	 -->									
 				</ul>
 
-            <!--     @if (!Auth::check())
+                @if (!Auth::check())
 				<a class="btn btn-outline-primary me-2" href="{{ route('account.login') }}" type="submit">Login</a>
 			    @else
 				    @if (Auth::user()->role == 'admin')
@@ -65,7 +70,7 @@
 					@endif
 				    <a class="btn btn-outline-primary me-2" href="{{ route('account.profile') }}" type="submit">Account</a>
 				@endif
-				<a class="btn btn-primary" href="" type="submit">Post a Dog</a> -->
+				<!-- <a class="btn btn-primary" href="" type="submit">Post a Dog</a> -->
 				
 			</div>
 		</div>

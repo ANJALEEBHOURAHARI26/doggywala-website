@@ -7006,7 +7006,7 @@ textarea.form-control-lg {
         justify-content: space-between;  
         align-items: center;            
         gap: 1.5rem; 
-        margin-left: 43%;                
+        margin-left: 30%;                
     }
 
     .navbar-nav {
@@ -10244,3 +10244,8 @@ p {
 .read-more-btn:active i {
     color: #FA7070; /* arrow stays red on click */
 }
+
+section.section-5 {
+    margin-top: 65px;
+}
+

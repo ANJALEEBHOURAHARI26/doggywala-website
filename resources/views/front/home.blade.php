@@ -27,6 +27,12 @@
 
 </style>
 @section('main')
+@if(session('error'))
+  <div class="alert alert-warning mt-3">
+    {{ session('error') }}
+  </div>
+@endif
+
 <!-- <section class="section-0 lazy d-flex bg-image-style dark align-items-center" data-bg="{{ asset('assets/images/banner7.png') }}">
     <div class="container">
         <div class="row">
@@ -94,7 +100,7 @@
 <section class="section-1 py-5"> 
     <div class="container">
         <div class="card border-0 shadow p-5">
-            <form action="{{ route('pets') }}" method="GET">
+            <form action="{{ route('available-puppies.search') }}" method="GET">
                 @csrf
                 <div class="row">
                     <!-- Search by pet name -->
@@ -125,49 +131,7 @@
 </section>
 
 
-<!-- <section class="section-2 bg-2 py-5">
-    <div class="container">
-        <h2>Popular Pet Type</h2>
-        <div class="row pt-5">
-            <div class="col-lg-4 col-xl-3 col-md-6">
-                <div class="single_category">
-                    <a href="pets.html?type=dog"><h4 class="pb-2">Dogs</h4></a>
-                    <p class="mb-0"> <span>150</span> Available for adoption</p>
-                </div>
-            </div>
-            <div class="col-lg-4 col-xl-3 col-md-6">
-                <div class="single_category">
-                    <a href="pets.html?type=cat"><h4 class="pb-2">Cats</h4></a>
-                    <p class="mb-0"> <span>100</span> Available for adoption</p>
-                </div>
-            </div>
-            <div class="col-lg-4 col-xl-3 col-md-6">
-                <div class="single_category">
-                    <a href="pets.html?type=rabbit"><h4 class="pb-2">Rabbits</h4></a>
-                    <p class="mb-0"> <span>30</span> Available for adoption</p>
-                </div>
-            </div>
-            <div class="col-lg-4 col-xl-3 col-md-6">
-                <div class="single_category">
-                    <a href="pets.html?type=hamster"><h4 class="pb-2">Hamsters</h4></a>
-                    <p class="mb-0"> <span>20</span> Available for adoption</p>
-                </div>
-            </div>
-            <div class="col-lg-4 col-xl-3 col-md-6">
-                <div class="single_category">
-                    <a href="pets.html?type=bird"><h4 class="pb-2">Birds</h4></a>
-                    <p class="mb-0"> <span>15</span> Available for adoption</p>
-                </div>
-            </div>
-            <div class="col-lg-4 col-xl-3 col-md-6">
-                <div class="single_category">
-                    <a href="pets.html?type=reptile"><h4 class="pb-2">Reptiles</h4></a>
-                    <p class="mb-0"> <span>10</span> Available for adoption</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section> -->
+
 <section class="py-5 bg-light text-center">
   <div class="container">
     <h2 class="mb-5 fw-bold">Why we’re the leading puppy adoption service</h2>
@@ -200,6 +164,49 @@
         <img src="https://www.puppyspot.com/preact/img/caring-experts.svg" alt="Caring Experts" class="mb-3" style="width:100px; height: 100px;">
         <h4 class="fw-semibold">Caring Experts</h4>
         <p class="small text-muted">Helping you every step to find your perfect puppy</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="py-5 bg-light" id="dog-grooming">
+  <div class="container text-center">
+    <h2 class="mb-4">Dog Grooming Services</h2>
+    <p class="mb-5 text-muted">Give your furry friend the love they deserve with our premium dog grooming packages!</p>
+
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="card h-100 border-0 shadow-sm p-4 text-center">
+          <div class="mb-3">
+            <i class="fa fa-shower fa-3x text-primary"></i>
+          </div>
+          <h5 class="card-title">Dog Bath & Blow Dry</h5>
+          <p class="card-text">Warm water bath, gentle shampoo, blow dry, and brushing — your pup will love it!</p>
+          <a href="/contact-us" class="btn btn-outline-primary mt-3">Book Bath</a>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card h-100 border-0 shadow-sm p-4 text-center">
+          <div class="mb-3">
+            <i class="fa fa-cut fa-3x text-success"></i>
+          </div>
+          <h5 class="card-title">Haircut & Styling</h5>
+          <p class="card-text">Breed-specific cuts or custom trims. Our groomers make your dog look stylish and neat.</p>
+          <a href="/contact-us" class="btn btn-outline-success mt-3">Book Styling</a>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card h-100 border-0 shadow-sm p-4 text-center">
+          <div class="mb-3">
+            <i class="fa fa-paw fa-3x text-danger"></i>
+          </div>
+          <h5 class="card-title">Nails, Ears & Hygiene</h5>
+          <p class="card-text">Nail clipping, ear cleaning, and hygiene trim for comfort, health, and safety.</p>
+          <a href="/contact-us" class="btn btn-outline-danger mt-3">Book Hygiene</a>
+        </div>
       </div>
     </div>
   </div>
@@ -546,6 +553,23 @@
         </div>
     </div>
 </section>
+<script>
+    @if(session('error'))
+        toastr.error("{{ session('error') }}");
+    @endif
+
+    @if(session('success'))
+        toastr.success("{{ session('success') }}");
+    @endif
+
+    @if(session('info'))
+        toastr.info("{{ session('info') }}");
+    @endif
+
+    @if(session('warning'))
+        toastr.warning("{{ session('warning') }}");
+    @endif
+</script>
 
 
 @endsection

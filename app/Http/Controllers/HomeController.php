@@ -83,10 +83,41 @@ public function contactUs()
 {
     return view('front.contact');
 }
-public function availablePuppies()
+// public function availablePuppies($city)
+// {
+//     $city = Pets::get();
+//     dd($petsDetails);
+//     return view('front.available-puppies',compact('petsDetails'));
+// }
+
+
+public function availablePuppies($city)
 {
-    return view('front.available-puppies');
+    // Fetch pets based on city (assuming you have a 'city' column in your 'pets' table)
+    $petsDetails = Pets::where('location', $city)->get();
+
+    return view('front.available-puppies', compact('petsDetails', 'city'));
 }
 
+public function searchPuppies(Request $request)
+{
+    $city = $request->input('location');
+    $name = $request->input('name');
+    $type = $request->input('type');
+
+    // Check if any pet exists with this city
+    $petsExists = Pets::where('location', $city)->exists();
+
+    if ($petsExists) {
+        return redirect()->route('available-puppies.city', ['city' => $city])
+                         ->with([
+                             'name' => $name,
+                             'type' => $type
+                         ]);
+    } else {
+        return back()->with('error', 'No pets found in this location.');
+
+    }
+}
 
 }

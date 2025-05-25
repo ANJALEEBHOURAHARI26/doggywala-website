@@ -14,46 +14,44 @@ use Illuminate\Support\Facades\Validator;
 
 class AccountController extends Controller
 {
-    // This method will show user registration page
     public function registration() {
         return view('front.account.registration');
     }
 
-    // This method will save a user
-    public function processRegistration(request $request){
-    $validator = Validator::make($request->all(),[
-        'name' => 'required',
-        'email' => 'required|email|unique:users,email',
-        'password' => 'required|min:5|same:confirm_password',
-        'confirm_password' => 'required|min:5',
-    ]);
-
-    if ($validator->passes()) {
-
-        $user = new User();
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = Hash::make($request->password);
-        $user->save();
-
-        session()->flash('success','You have registered successfully.');
-
-        return response()->json([
-            'status' => true,
-            'errors' => []
+    public function processRegistration(request $request)
+    {
+        $validator = Validator::make($request->all(),[
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|min:5|same:confirm_password',
+            'confirm_password' => 'required|min:5',
         ]);
 
-    } else {
-        return response()->json([
-            'status' => false,
-            'errors' => $validator->errors()
-        ]);
+        if ($validator->passes()) {
+
+            $user = new User();
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->password = Hash::make($request->password);
+            $user->save();
+
+            session()->flash('success','You have registered successfully.');
+
+            return response()->json([
+                'status' => true,
+                'errors' => []
+            ]);
+
+        } else {
+            return response()->json([
+                'status' => false,
+                'errors' => $validator->errors()
+            ]);
+        }
     }
 
-    }
-
-    // This method will show user login page
-    public function login() {
+    public function login() 
+    {
         return view('front.account.login');
     }
 
@@ -128,9 +126,8 @@ class AccountController extends Controller
         return redirect()->route('account.login');
     }
     
-    public function updateProfilePic(Request $request){
-        // dd($request->all());
-
+    public function updateProfilePic(Request $request)
+    {
         $id = Auth::user()->id;
         $validator = Validator::make($request->all(),[
             'image' => 'required|image'

@@ -10,49 +10,35 @@
     </div>
 </section>
 
-
-
 <section class="py-5" style="background-color: #f9fff9;">
   <div class="container">
     <div class="row g-4 justify-content-center">
 
-      <!-- Puppy Card: Beagle -->
-      <div class="col-md-6 col-lg-6">
-        <div class="card border-0 shadow-sm rounded-4 h-100 p-3">
-          <div class="d-flex align-items-center">
-            <img src="{{ asset('assets/images/beagle.jpg') }}" class="puppy-img me-3" style="width: 140px;" alt="Beagle Puppy">
-            <div>
-              <h5 class="fw-bold text-danger">Beagle</h5>
-              <p class="mb-2">If you are looking for a friendly and playful puppy that gels well with your family, you can look for the Beagle puppies for sale in Pune.</p>
-              <a href="#" class="read-more-btn">
-                  Read More <i class="bi bi-arrow-right ms-1"></i>
+      @forelse($petsDetails as $pet)
+        <div class="col-md-6 col-lg-6">
+          <div class="card border-0 shadow-sm rounded-4 h-100 p-3">
+            <div class="d-flex align-items-center">
+              <img src="{{ asset('uploads/photos/' . $pet->photo_path) }}" class="puppy-img me-3" style="width: 140px;" alt="{{ $pet->name }} Puppy">
+              <div>
+                <h5 class="fw-bold text-danger">{{ $pet->breed }}</h5>
+                <p class="mb-2">{{ $pet->description }}</p>
+                <a href="#" class="read-more-btn">
+                    Read More <i class="bi bi-arrow-right ms-1"></i>
                 </a>
-
+              </div>
             </div>
           </div>
         </div>
-      </div>
-
-      <!-- Puppy Card: Doberman -->
-      <div class="col-md-6 col-lg-6">
-        <div class="card border-0 shadow-sm rounded-4 h-100 p-3">
-          <div class="d-flex align-items-center">
-            <img src="{{ asset('assets/images/doberman.jpg') }}" class="puppy-img me-3" style="width: 140px;" alt="Doberman Puppy">
-            <div>
-              <h5 class="fw-bold text-danger">Doberman</h5>
-              <p class="mb-2">We have the most adorable Doberman puppies for sale in Pune. You can take them home if you are willing to pet a dog that is equal parts playful, sweet and protective.</p>
-              <a href="#" class="read-more-btn">
-                  Read More <i class="bi bi-arrow-right ms-1"></i>
-                </a>
-
-            </div>
-          </div>
+      @empty
+        <div class="col-12 text-center">
+            <p>No puppies available in {{ ucfirst($city) }} at the moment.</p>
         </div>
-      </div>
+      @endforelse
 
     </div>
   </div>
 </section>
+
 
 
 

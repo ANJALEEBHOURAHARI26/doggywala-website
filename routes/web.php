@@ -5,6 +5,8 @@ use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\admin\PetController;
 use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\AdminDashboardController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,12 +19,28 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+
+//---------------------------------------------------Admin Login---------------------------------------------------------
+
+Route::get('/', [LoginController::class, 'adminLogin'])->name('admin.login');
+Route::get('/login', [LoginController::class, 'adminLogin'])->name('admin.login');
+Route::post('/admin-login', [LoginController::class, 'login'])->name('admin.login.post');
+Route::post('/logout', [LoginController::class, 'logout'])->name('admin.logout');
+
+
+
 Route::get('/blogs', [HomeController::class, 'blogs'])->name('blogs');
 Route::get('/contact-us', [HomeController::class, 'contactUs'])->name('conract-us');
 // Route::get('/available-puppies', [HomeController::class, 'availablePuppies'])->name('available-puppies');
-Route::get('/available-puppies/{city}', function($city) {
-    return view('front.available-puppies', compact('city'));
-})->name('available-puppies.city');
+// Route::get('/available-puppies/{city}', function($city) {
+//     return view('front.available-puppies', compact('city'));
+// })->name('available-puppies.city');
+
+Route::get('/available-puppies/{city}',[HomeController::class, 'availablePuppies'])->name('available-puppies.city');
+
+Route::get('/available-puppies-search', [HomeController::class, 'searchPuppies'])->name('available-puppies.search');
+
 
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
