@@ -44,9 +44,9 @@
                                 </thead>
                                 <tbody>
                                     @if ($pets->isNotEmpty())
-                                        @foreach ($pets as $pet)
+                                        @foreach ($pets as $key=>$pet)
                                             <tr>
-                                                <td>{{ $pet->id }}</td>
+                                                <td>{{ $key+1 }}</td>
                                                 <td>
                                                     @if ($pet->photo_path)
                                                         <img width="50" src="{{ asset('uploads/photos/' . $pet->photo_path) }}" alt="{{ $pet->name }}">

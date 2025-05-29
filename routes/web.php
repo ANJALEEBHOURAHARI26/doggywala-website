@@ -37,9 +37,12 @@ Route::post('/contact', [HomeController::class, 'send'])->name('contact.send');
 Route::get('/available-puppies/{city}',[HomeController::class, 'availablePuppies'])->name('available-puppies.city');
 
 Route::get('/available-puppies-search', [HomeController::class, 'searchPuppies'])->name('available-puppies.search');
-
-
 Route::get('/pet-details/{city}', [HomeController::class, 'show'])->name('pet.details');
+
+// Route::get('/available-puppies-details/{id}/{city}', [HomeController::class, 'available_puppies_details'])->name('available-puppies-details');
+ Route::get('/available-puppies-details/{breed}/{city}', [HomeController::class, 'available_puppies_details'])->name('available-puppies-details');
+
+
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/search_pet', [HomeController::class, 'search'])->name('pets');

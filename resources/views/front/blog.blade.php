@@ -68,54 +68,28 @@
     <div class="row g-4">
 
       <!-- Blog Card 1 -->
+      @foreach($blogDetails as $blogDetails)
       <div class="col-md-4">
         <div class="card border-0 shadow-sm rounded-4 h-100">
-          <img src="{{ asset('assets/images/1725094690_dog-nutrition-doggywala.jpg') }}" class="card-img-top rounded-top-4" alt="Dog Blog 1">
+          <!-- <img src="{{ asset('assets/images/1725094690_dog-nutrition-doggywala.jpg') }}" class="card-img-top rounded-top-4" alt="Dog Blog 1"> -->
+           
+               <img width="50" src="{{ asset($blogDetails->image) }}" class="card-img-top rounded-top-4" alt="Dog Blog 1">
+
+            
           <div class="card-body">
-            <h5 class="fw-bold">The Ultimate Guide To Puppy Nutrition For All Breeds</h5>
-            <p class="text-muted small">Feeding your pet right is the most important aspect of nurturing it. The kind of food your pooch eats determines its fitness and health...</p>
+            <h5 class="fw-bold">{{$blogDetails->title}}</h5>
+            <p class="text-muted small">{{$blogDetails->description}}</p>
             <span class="badge bg-danger mb-2">Dog Food</span>
             <div class="d-flex align-items-center gap-2 text-muted small">
-              <i class="bi bi-person-circle text-primary"></i> Shivling Giri
-              <span class="ms-auto"><i class="bi bi-calendar-date text-primary"></i> 31 August 2024</span>
+              <i class="bi bi-person-circle text-primary"></i> {{$blogDetails->user->name}}
+              <span class="ms-auto"><i class="bi bi-calendar-date text-primary"></i> {{ \Carbon\Carbon::parse($blogDetails->created_at)->format('d F Y') }}</span>
             </div>
           </div>
         </div>
       </div>
+      @endforeach
 
-      <!-- Blog Card 2 -->
-      <div class="col-md-4">
-        <div class="card border-0 shadow-sm rounded-4 h-100">
-          <img src="{{ asset('assets/images/1722601151_family-friendly-dogs.jpg') }}" class="card-img-top rounded-top-4" alt="Dog Blog 2">
-          <div class="card-body">
-            <h5 class="fw-bold">Puppies Training Tips For New Pet Parents</h5>
-            <p class="text-muted small">Puppy training is an important aspect of caring for your furry friend. Don’t take training for granted and give it your all...</p>
-            <span class="badge bg-danger mb-2">Dog Blogs</span>
-            <div class="d-flex align-items-center gap-2 text-muted small">
-              <i class="bi bi-person-circle text-primary"></i> Shivling Giri
-              <span class="ms-auto"><i class="bi bi-calendar-date text-primary"></i> 21 August 2024</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Blog Card 3 -->
-      <div class="col-md-4">
-        <div class="card border-0 shadow-sm rounded-4 h-100">
-          <img src="{{ asset('assets/images/1723627653_choose-puppy1.jpg') }}" class="card-img-top rounded-top-4" alt="Dog Blog 3">
-          <div class="card-body">
-            <h5 class="fw-bold">How To Choose The Right Breed Puppy For Your Lifestyle?</h5>
-            <p class="text-muted small">Choosing a puppy is an important decision in a dog lover’s life. Every dog breed has different personalities, needs, and lifestyles...</p>
-            <span class="badge bg-danger mb-2">Dog Blogs</span>
-            <div class="d-flex align-items-center gap-2 text-muted small">
-              <i class="bi bi-person-circle text-primary"></i> Shivling Giri
-              <span class="ms-auto"><i class="bi bi-calendar-date text-primary"></i> 14 August 2024</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div>
+     
   </div>
 </section>
 

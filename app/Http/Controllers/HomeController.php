@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Pets;
 use App\Models\SavedPet;
 use Illuminate\Http\Request;
+use App\Models\Blog;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
@@ -54,7 +55,6 @@ class HomeController extends Controller
             ]);
         }
 
-        // Check if user already saved the pet
         $count = SavedPet::where([
             'user_id' => Auth::user()->id,
             'pet_id' => $id
@@ -80,7 +80,9 @@ class HomeController extends Controller
 
     public function blogs()
     {
-        return view('front.blog');
+        $blogDetails = Blog::with('user')->get();
+        // dd($blogDetails);
+        return view('front.blog',compact('blogDetails'));
     }
 
     public function contactUs()
@@ -97,7 +99,6 @@ class HomeController extends Controller
             'message' => 'required',
         ]);
 
-        // Send email to admin
         Mail::send('front.email.contact', [
             'name'    => $request->name,
             'email'   => $request->email,
@@ -125,15 +126,14 @@ class HomeController extends Controller
         $name = $request->input('name');
         $type = $request->input('type');
 
-        // Check if any pet exists with this city
         $petsExists = Pets::where('location', $city)->exists();
 
         if ($petsExists) {
             return redirect()->route('available-puppies.city', ['city' => $city])
-                             ->with([
-                                 'name' => $name,
-                                 'type' => $type
-                             ]);
+             ->with([
+                 'name' => $name,
+                 'type' => $type
+             ]);
         } else {
             return back()->with('error', 'No pets found in this location.');
 
@@ -144,6 +144,12 @@ class HomeController extends Controller
     {
         $pets = Pets::where('location', 'LIKE', '%' . $city . '%')->get();
         return view('front.pet-details', compact('pets','city'));
+    }
+
+    public function available_puppies_details($breed, $city)
+    {
+        $pets = Pets::where('breed', $breed)->first();
+        return view('front.available-puppies-details', compact('pets','city'));
     }
 
 

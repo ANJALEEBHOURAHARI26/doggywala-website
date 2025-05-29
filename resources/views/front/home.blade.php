@@ -221,9 +221,9 @@
             <div class="pet_listing_area">                    
                 <div class="pet_lists">
                     <div class="row">
-                         @php
-                                        use Illuminate\Support\Str;
-                                    @endphp
+                        @php
+                            use Illuminate\Support\Str;
+                        @endphp
                         @foreach($featuredPets as $pet)
                         <div class="col-md-4">
                             <div class="card border-0 p-3 shadow mb-4">

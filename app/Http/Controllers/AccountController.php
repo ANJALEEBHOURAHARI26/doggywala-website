@@ -175,7 +175,7 @@ class AccountController extends Controller
             'other_details' => 'required',
             'location' => 'required|max:50',
             'description' => 'required',
-            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048' // Updated to validate 'photo'
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048' 
     ];
 
         $validator = Validator::make($request->all(),$rules);
@@ -220,6 +220,15 @@ class AccountController extends Controller
         $pets = Pets::orderBy('created_at','DESC')->paginate(5);
         return view('front.account.pet.my-pets',[
             'pets' => $pets
+        ]);
+    }
+
+    public function blogList()
+    {
+        $blogList = Blog::get();
+        // dd($blogList);
+        return view('front.account.pet.blog-list',[
+            'blogList' => $blogList
         ]);
     }
 
@@ -335,21 +344,18 @@ class AccountController extends Controller
             'message' => 'required|string',
         ]);
 
-        // Prepare data for the email
         $data = [
             'name' => $request->name,
             'email' => $request->email,
             'messageContent' => $request->message,
         ];
 
-        // Send email to admin
         Mail::send('front.feedback', $data, function ($message) use ($data) {
-            $message->to('muneebyaqub7@gmail.com') // Replace with the admin email address
+            $message->to('muneebyaqub7@gmail.com') 
                     ->subject('New Feedback from ' . $data['name']);
             $message->from($data['email']);
         });
 
-        // Redirect back with a success message
         return redirect()->back()->with('success', 'Thank you for your message! We will get back to you soon.');
     }
 
@@ -359,31 +365,38 @@ class AccountController extends Controller
 
     public function saveBlog(Request $request)
     {
-        // Validate inputs
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
         ]);
 
-        // Handle image upload
         $imagePath = null;
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $imageName = time().'_'.$image->getClientOriginalName();
-            $imagePath = $image->storeAs('uploads/blogs', $imageName, 'public');
+
+            $destinationPath = public_path('uploads/blogs');
+
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0755, true);
+            }
+
+            $image->move($destinationPath, $imageName);
+
+            $imagePath = 'uploads/blogs/' . $imageName;
         }
 
-        // Save blog
         $blog = new Blog();
-        $blog->user_id = Auth::id(); // admin user ID
+        $blog->user_id = Auth::id(); 
         $blog->title = $request->title;
         $blog->description = $request->description;
         $blog->image = $imagePath;
         $blog->save();
 
-        return redirect()->back()->with('success', 'Blog post created successfully!');
+        return redirect()->route('account.blogList')->with('success','Blog post created successfully!');
     }
+
 }
 
 
