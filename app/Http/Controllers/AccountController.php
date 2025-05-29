@@ -122,6 +122,26 @@ class AccountController extends Controller
 
     }
 
+    public function updatePassword(Request $request)
+    {
+        $request->validate([
+            'old_password' => 'required',
+            'new_password' => 'required|min:6',
+            'confirm_password' => 'required|same:new_password',
+        ]);
+
+        $user = Auth::user();
+
+        if (!Hash::check($request->old_password, $user->password)) {
+            return response()->json(['errors' => ['old_password' => ['Old password is incorrect.']]], 422);
+        }
+
+        $user->password = Hash::make($request->new_password);
+        $user->save();
+
+        return response()->json(['message' => 'Password updated successfully.']);
+    }
+
     public function logout() {
         Auth::logout();
         return redirect()->route('account.login');

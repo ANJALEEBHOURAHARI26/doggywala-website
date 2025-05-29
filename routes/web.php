@@ -76,6 +76,8 @@ Route::group(['prefix' => 'account', 'controller' => AccountController::class], 
     Route::group(['middleware' => 'auth'], function () {
         Route::any('/profile', 'profile')->name('account.profile');
         Route::any('/update-profile', 'updateProfile')->name('account.updateProfile');
+        Route::post('/update-password', 'updatePassword')->name('account.update-password');
+
         Route::any('/logout', 'logout')->name('account.logout');
         Route::any('/update-profile-pic', 'updateProfilePic')->name('account.updateProfilePic');
 

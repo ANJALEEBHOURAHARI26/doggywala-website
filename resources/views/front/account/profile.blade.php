@@ -51,23 +51,26 @@
                 <div class="card border-0 shadow mb-4">
                     <div class="card-body p-4">
                         <h3 class="fs-4 mb-1">Change Password</h3>
-                        <div class="mb-4">
-                            <label for="" class="mb-2">Old Password*</label>
-                            <input type="password" placeholder="Old Password" class="form-control">
-                        </div>
-                        <div class="mb-4">
-                            <label for="" class="mb-2">New Password*</label>
-                            <input type="password" placeholder="New Password" class="form-control">
-                        </div>
-                        <div class="mb-4">
-                            <label for="" class="mb-2">Confirm Password*</label>
-                            <input type="password" placeholder="Confirm Password" class="form-control">
-                        </div>                        
+                        <div id="password-message"></div>
+                        <form id="changePasswordForm">
+                            @csrf
+                            <div class="mb-4">
+                                <label for="" class="mb-2">Old Password*</label>
+                                <input type="password" name="old_password" class="form-control" required>
+                            </div>
+                            <div class="mb-4">
+                                <label for="" class="mb-2">New Password*</label>
+                                <input type="password" name="new_password" class="form-control" required>
+                            </div>
+                            <div class="mb-4">
+                                <label for="" class="mb-2">Confirm Password*</label>
+                                <input type="password" name="confirm_password" class="form-control" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Update Password</button>
+                        </form>
                     </div>
-                    <div class="card-footer  p-4">
-                        <button type="submit" class="btn btn-primary">Update</button>
-                    </div>
-                </div>                
+                </div>
+                 
             </div>
         </div>
     </div>
@@ -129,6 +132,30 @@ $("#userForm").submit(function(e){
 
             }
 
+        }
+    });
+});
+
+
+$('#changePasswordForm').submit(function(e) {
+    e.preventDefault();
+
+    $.ajax({
+        url: "{{ route('account.update-password') }}",
+        type: "POST",
+        data: $(this).serialize(),
+        success: function(response) {
+            $('#password-message').html('<div class="alert alert-success">' + response.message + '</div>');
+            $('#changePasswordForm')[0].reset();
+        },
+        error: function(xhr) {
+            let errors = xhr.responseJSON.errors;
+            let msg = '<div class="alert alert-danger">';
+            for (let field in errors) {
+                msg += errors[field][0] + '<br>';
+            }
+            msg += '</div>';
+            $('#password-message').html(msg);
         }
     });
 });
