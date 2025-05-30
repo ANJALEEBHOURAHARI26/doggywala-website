@@ -34,8 +34,8 @@
                                         @enderror
                                     </div>
                                       <div class="col-md-6 mb-4">
-                                        <label for="photo" class="mb-2">Photo</label>
-                                        <input type="file" name="image" id="image" class="@error('photo') is-invalid  @enderror form-control" accept="image/*">
+                                        <label for="image" class="mb-2">Image</label>
+                                        <input type="file" name="image" id="image" class="@error('image') is-invalid  @enderror form-control" accept="image/*">
                                         @error('photo')
                                             <p class="invalid-feedback">{{ $message }}</p>
                                         @enderror

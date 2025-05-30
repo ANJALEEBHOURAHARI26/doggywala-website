@@ -45,19 +45,15 @@
                                             <tr>
                                                 <td>{{ $key+1 }}</td>
                                                 <td>
-                                                    @if ($blogList->image)
-                                                        <img width="50" src="{{ asset('uploads/blogs/' . $blogList->image) }}" alt="{{ $blogList->name }}">
-                                                    @else
-                                                        <img width="50" src="{{ asset('uploads/photos/default.jpg') }}" alt="Default Image"> 
-                                                    @endif
+                                                    <img width="50" src="{{ asset($blogList->image) }}" class="card-img-top rounded-top-4" alt="Dog Blog">
                                                 </td>
                                                 <td>{{ $blogList->title }}</td>
                                                 <td>{{ $blogList->description }}</td>
                                                 <td>{{ \Carbon\Carbon::parse($blogList->created_at)->format('d M, Y') }}</td> 
                                                 <td>
-                                                    <a href="" class="btn btn-dark btn-sm">Edit</a>
-                                                    <a href="#"  class="btn btn-success btn-sm">Delete</a>
-                                                    <form  action="" method="post">
+                                                    <a href="{{ route('account.editBlog',$blogList->id) }}" class="btn btn-dark btn-sm">Edit</a>
+                                                    <a href="#"  onclick="deleteBlog({{ $blogList->id  }});" class="btn btn-success btn-sm">Delete</a>
+                                                    <form id="delete-blogs-from-{{ $blogList->id  }}" action="{{ route('account.destroyBlog',$blogList->id) }}"   method="post">
                                                         @csrf
                                                         @method('delete')
                                                     </form>
@@ -82,4 +78,11 @@
     </div>
 </section>
 @endsection
+<script>
+    function deleteBlog(id) {
+        if (confirm("Are you sure you want to delete blog?")) {
+            document.getElementById("delete-blogs-from-"+id).submit();
+        }
+    }
+</script>
 

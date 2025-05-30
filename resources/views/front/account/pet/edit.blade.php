@@ -118,7 +118,6 @@
                                             <p class="invalid-feedback">{{ $message }}</p>
                                     @enderror
                                 </div>
-                            </form>
                         </div>
                     
                         <div class="card-footer p-4">

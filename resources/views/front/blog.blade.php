@@ -73,7 +73,7 @@
         <div class="card border-0 shadow-sm rounded-4 h-100">
           <!-- <img src="{{ asset('assets/images/1725094690_dog-nutrition-doggywala.jpg') }}" class="card-img-top rounded-top-4" alt="Dog Blog 1"> -->
            
-               <img width="50" src="{{ asset($blogDetails->image) }}" class="card-img-top rounded-top-4" alt="Dog Blog 1">
+               <img width="50" src="{{ asset($blogDetails->image) }}" class="card-img-top rounded-top-4" alt="Dog Blog">
 
             
           <div class="card-body">

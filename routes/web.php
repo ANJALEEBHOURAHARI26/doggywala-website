@@ -86,7 +86,7 @@ Route::group(['prefix' => 'account', 'controller' => AccountController::class], 
         Route::any('/store-pet', 'store')->name('account.storePet');
         Route::any('/save-pet', 'savePet')->name('account.savePet');
         Route::any('/store-pet/{pets}/edit', 'edit')->name('account.edit');
-        Route::any('/store-pet/{pets}', 'update')->name('account.update');
+        Route::put('/store-pet/{pets}', 'update')->name('account.update');
         Route::any('/store-pet/{pets}/delete', 'destroy')->name('account.destroy');
         Route::any('/saved-pets', 'savedPets')->name('account.savedPets');
         Route::any('/remove-saved-pet/{id}', 'removeSavedPet')->name('removeSavedPet');
@@ -96,6 +96,9 @@ Route::group(['prefix' => 'account', 'controller' => AccountController::class], 
         Route::any('/create-blog', 'createBlog')->name('account.createBlog');
         Route::any('/save-blog', 'saveBlog')->name('account.saveBlog');
         Route::any('/blog-list', 'blogList')->name('account.blogList');
+        Route::any('/store-blog/{blogs}/edit', 'editBlog')->name('account.editBlog');
+        Route::put('/store-blog/{blogs}', 'updateBlog')->name('account.updateBlog');
+        Route::any('/store-blog/{blogs}/delete', 'destroyBlog')->name('account.destroyBlog');
 
     });
 });

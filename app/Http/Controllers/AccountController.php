@@ -417,6 +417,70 @@ class AccountController extends Controller
         return redirect()->route('account.blogList')->with('success','Blog post created successfully!');
     }
 
+    
+    public function editBlog($id)
+    {
+        $blog = Blog::findOrFail($id);
+        return view('front.account.pet.edit-blog',[
+            'blog' => $blog
+        ]);
+    }
+
+    
+    public function updateBlog($id, Request $request)
+    {
+        $blog = Blog::findOrFail($id);
+
+        $rules = [
+            'title' => 'required|max:255',
+            'description' => 'required',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048'
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            return redirect()->route('account.editBlog', $blog->id)->withInput()->withErrors($validator);
+        }
+
+        $blog->title = $request->title;
+        $blog->description = $request->description;
+
+        if ($request->hasFile('image')) {
+            if ($blog->image && file_exists(public_path($blog->image))) {
+                File::delete(public_path($blog->image));
+            }
+
+            $image = $request->file('image');
+            $imageName = time().'_'.$image->getClientOriginalName();
+            $destinationPath = public_path('uploads/blogs');
+
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0755, true);
+            }
+
+            $image->move($destinationPath, $imageName);
+            $blog->image = 'uploads/blogs/' . $imageName;  
+        }
+
+        $blog->save();
+
+        return redirect()->route('account.blogList')->with('success', 'Blog updated successfully');
+    }
+
+    public function destroyBlog($id) 
+    {
+        $blog = Blog::findOrFail($id);
+
+        File::delete(public_path('uploads/blogs/'.$blog->image));
+        $blog->delete();
+
+        return redirect()->route('account.blogList')->with('success','Blog deleted successfully.');
+    }
+
+
+
+
 }
 
 
