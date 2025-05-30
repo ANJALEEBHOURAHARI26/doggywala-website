@@ -148,9 +148,13 @@ class HomeController extends Controller
 
     public function available_puppies_details($breed, $city)
     {
-        $pets = Pets::where('breed', $breed)->first();
-        return view('front.available-puppies-details', compact('pets','city'));
+        $pets = Pets::where('breed', $breed)
+                    ->where('location', $city)
+                    ->get();
+
+        return view('front.available-puppies-details', compact('pets', 'city', 'breed'));
     }
+
 
 
 }

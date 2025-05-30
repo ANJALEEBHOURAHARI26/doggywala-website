@@ -67,7 +67,7 @@
                                         </select>
                                     </div>
                                     <div class="col-md-6 mb-4">
-                                        <label for="Price" class="mb-2">Price<span class="req">*</span></label>
+                                        <label for="price" class="mb-2">Price<span class="req">*</span></label>
                                         <input type="number" name="price" id="price" class="@error('price') is-invalid  @enderror form-control" min="0" placeholder="Price" required>
                                         @error('price')
                                             <p class="invalid-feedback">{{ $message }}</p>

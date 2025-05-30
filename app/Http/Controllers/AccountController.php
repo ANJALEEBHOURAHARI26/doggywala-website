@@ -210,11 +210,10 @@ class AccountController extends Controller
         $pets->type = $request->type;
         $pets->breed = $request->breed;
         $pets->age = $request->age;
-        $pet->price = $request->price;
-        $pet->gender = $request->gender;
-        $pet->other_details = $request->other_details;
+        $pets->price = $request->price;
+        $pets->gender = $request->gender;
+        $pets->other_details = $request->other_details;
         $pets->location = $request->location;
-        
         $pets->description = $request->description;
         $pets->contact_info = $request->contact_info;
         $pets->save();
