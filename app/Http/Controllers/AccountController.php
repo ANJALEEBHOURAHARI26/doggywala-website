@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Models\Blog;
+use App\Models\Enquiry;
 use Illuminate\Support\Facades\Validator;
 
 class AccountController extends Controller
@@ -185,7 +186,8 @@ class AccountController extends Controller
         return view('front.account.pet.create');
     }
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         $rules = [
             'name' => 'required|max:255',
             'type' => 'required|max:255',
@@ -204,7 +206,6 @@ class AccountController extends Controller
             return redirect()->route('account.createPet')->withInput()->withErrors($validator);
         }
 
-        // here we will insert product in db
         $pets = new Pets();
         $pets->name = $request->name;
         $pets->type = $request->type;
@@ -219,15 +220,12 @@ class AccountController extends Controller
         $pets->save();
 
         if ($request->photo != "") {
-            // here we will store image
             $photo = $request->photo;
             $ext = $photo->getClientOriginalExtension();
-            $photoName = time().'.'.$ext; // Unique image name
+            $photoName = time().'.'.$ext; 
 
-            // Save image to pets directory
             $photo->move(public_path('uploads/photos'),$photoName);
 
-            // Save image name in database
             $pets->photo_path = $photoName;
             $pets->save();
         }
@@ -477,8 +475,22 @@ class AccountController extends Controller
         return redirect()->route('account.blogList')->with('success','Blog deleted successfully.');
     }
 
+    public function enquiryList(Request $request)
+    {
+       $enquiries = Enquiry::latest()->get();
+       $query = Enquiry::query();
 
+        if ($request->has('search')) {
+            $search = $request->search;
+            $query->where('name', 'like', "%$search%")
+                  ->orWhere('email', 'like', "%$search%")
+                  ->orWhere('phone', 'like', "%$search%");
+        }
 
+        $enquiries = $query->latest()->get();
+
+       return view('front.account.enquiry-detail', compact('enquiries'));
+    }
 
 }
 

@@ -334,20 +334,24 @@
         <p class="text-center text-muted mb-5">We love to hear from fellow dog lovers! Reach out through any of the ways below.</p>
         
         <div class="row text-center">
-            <div class="col-md-4 mb-4">
-                <div class="p-4 bg-white shadow-sm rounded">
-                    <i class="fab fa-whatsapp fa-2x mb-3 text-success"></i>
-                    <h5 class="fw-bold">WhatsApp</h5>
-                    <p class="text-muted mb-0">+91 9876543210</p>
+           <div class="col-md-4 mb-4">
+              <a href="https://wa.me/919876543210" target="_blank" class="text-decoration-none">
+                <div class="p-4 bg-white shadow-sm rounded text-center">
+                  <i class="fab fa-whatsapp fa-2x mb-3 text-success"></i>
+                  <h5 class="fw-bold text-dark">WhatsApp</h5>
+                  <p class="text-muted mb-0">+91 9876543210</p>
                 </div>
+              </a>
             </div>
 
             <div class="col-md-4 mb-4">
-                <div class="p-4 bg-white shadow-sm rounded">
-                    <i class="fab fa-instagram fa-2x mb-3 text-danger"></i>
-                    <h5 class="fw-bold">Instagram</h5>
-                    <p class="text-muted mb-0">@doggyworld</p>
+              <a href="https://www.instagram.com/doggyworld" target="_blank" class="text-decoration-none">
+                <div class="p-4 bg-white shadow-sm rounded text-center">
+                  <i class="fab fa-instagram fa-2x mb-3 text-danger"></i>
+                  <h5 class="fw-bold text-dark">Instagram</h5>
+                  <p class="text-muted mb-0">@doggyworld</p>
                 </div>
+              </a>
             </div>
 
             <div class="col-md-4 mb-4">

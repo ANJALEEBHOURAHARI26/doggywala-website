@@ -8,6 +8,8 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\AdminDashboardController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\EnquiryController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -42,11 +44,20 @@ Route::get('/pet-details/{city}', [HomeController::class, 'show'])->name('pet.de
 // Route::get('/available-puppies-details/{id}/{city}', [HomeController::class, 'available_puppies_details'])->name('available-puppies-details');
  Route::get('/available-puppies-details/{breed}/{city}', [HomeController::class, 'available_puppies_details'])->name('available-puppies-details');
 
+// Route::post('/submit-enquiry', [HomeController::class, 'submit'])->name('enquiry.submit');
+
 
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/search_pet', [HomeController::class, 'search'])->name('pets');
 Route::post('/save_pet', [HomeController::class, 'savePet'])->name('savePet');
+
+
+
+
+Route::post('/send_enquiry', [EnquiryController::class, 'store'])->name('enquiry.store');
+
+
 
 Route::group(['prefix' => 'admin','middleware' => 'checkRole'], function(){
     Route::get('/dashboard',[DashboardController::class,'index'])->name('admin.dashboard');
@@ -99,6 +110,9 @@ Route::group(['prefix' => 'account', 'controller' => AccountController::class], 
         Route::any('/store-blog/{blogs}/edit', 'editBlog')->name('account.editBlog');
         Route::put('/store-blog/{blogs}', 'updateBlog')->name('account.updateBlog');
         Route::any('/store-blog/{blogs}/delete', 'destroyBlog')->name('account.destroyBlog');
+
+
+        Route::any('/enquiry-list', 'enquiryList')->name('account.enquiryList');
 
     });
 });

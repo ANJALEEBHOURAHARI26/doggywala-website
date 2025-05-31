@@ -30,8 +30,11 @@
             <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                 <a href="{{ route('account.createBlog') }}">Blog</a>
             </li>
-             <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+            <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                 <a href="{{ route('account.blogList') }}">Blog List</a>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                <a href="{{ route('account.enquiryList') }}">Enquiry List</a>
             </li>
              <!-- <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                 <a href="{{ route('account.blogList') }}">Blog</a>
