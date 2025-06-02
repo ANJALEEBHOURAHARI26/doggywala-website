@@ -85,6 +85,14 @@ class HomeController extends Controller
         return view('front.blog',compact('blogDetails'));
     }
 
+    public function blogsDetails($id)
+    {
+        $blog = Blog::with('user')->findOrFail($id);
+        $relatedBlogs = Blog::get();
+        return view('front.blog-details', compact('blog', 'relatedBlogs'));
+    }
+
+
     public function contactUs()
     {
         return view('front.contact');

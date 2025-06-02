@@ -388,11 +388,11 @@ class AccountController extends Controller
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
         ]);
 
-        $imagePath = null;
+        $imageName = null;
+
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $imageName = time().'_'.$image->getClientOriginalName();
-
             $destinationPath = public_path('uploads/blogs');
 
             if (!file_exists($destinationPath)) {
@@ -400,15 +400,13 @@ class AccountController extends Controller
             }
 
             $image->move($destinationPath, $imageName);
-
-            $imagePath = 'uploads/blogs/' . $imageName;
         }
 
         $blog = new Blog();
         $blog->user_id = Auth::id(); 
         $blog->title = $request->title;
         $blog->description = $request->description;
-        $blog->image = $imagePath;
+        $blog->image = $imageName; // only file name stored
         $blog->save();
 
         return redirect()->route('account.blogList')->with('success','Blog post created successfully!');
@@ -437,15 +435,18 @@ class AccountController extends Controller
         $validator = Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
-            return redirect()->route('account.editBlog', $blog->id)->withInput()->withErrors($validator);
+            return redirect()->route('account.editBlog', $blog->id)
+                             ->withInput()
+                             ->withErrors($validator);
         }
 
         $blog->title = $request->title;
         $blog->description = $request->description;
 
         if ($request->hasFile('image')) {
-            if ($blog->image && file_exists(public_path($blog->image))) {
-                File::delete(public_path($blog->image));
+            // Delete old image if exists
+            if ($blog->image && file_exists(public_path('uploads/blogs/' . $blog->image))) {
+                File::delete(public_path('uploads/blogs/' . $blog->image));
             }
 
             $image = $request->file('image');
@@ -457,13 +458,14 @@ class AccountController extends Controller
             }
 
             $image->move($destinationPath, $imageName);
-            $blog->image = 'uploads/blogs/' . $imageName;  
+            $blog->image = $imageName; // only file name stored
         }
 
         $blog->save();
 
         return redirect()->route('account.blogList')->with('success', 'Blog updated successfully');
     }
+
 
     public function destroyBlog($id) 
     {

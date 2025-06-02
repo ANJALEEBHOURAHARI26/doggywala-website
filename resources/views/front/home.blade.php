@@ -24,7 +24,9 @@
     width: 3rem;
     height: 3rem;
 }
-
+h3.border-0.fs-5.pb-2.mb-0 {
+    margin-top: 13px;
+}
 </style>
 @section('main')
 @if(session('error'))
@@ -228,6 +230,22 @@
                         <div class="col-md-4">
                             <div class="card border-0 p-3 shadow mb-4">
                                 <div class="card-body">
+                                    @if ($pet->photo_path)
+                                        <img 
+                                            src="{{ asset('uploads/photos/' . $pet->photo_path) }}" 
+                                            alt="{{ $pet->name }}" 
+                                            width="50" 
+                                            height="50" 
+                                            style="object-fit: cover; border-radius: 6px;">
+                                    @else
+                                        <img 
+                                            src="{{ asset('uploads/photos/default.jpg') }}" 
+                                            alt="Default Image" 
+                                            width="50" 
+                                            height="50" 
+                                            style="object-fit: cover; border-radius: 6px;">
+                                    @endif
+
                                     <h3 class="border-0 fs-5 pb-2 mb-0">{{ $pet->name }}</h3>
                                   
 
@@ -294,6 +312,21 @@
                         <div class="col-md-4">
                             <div class="card border-0 p-3 shadow mb-4">
                                 <div class="card-body">
+                                     @if ($pet->photo_path)
+                                        <img 
+                                            src="{{ asset('uploads/photos/' . $pet->photo_path) }}" 
+                                            alt="{{ $pet->name }}" 
+                                            width="50" 
+                                            height="50" 
+                                            style="object-fit: cover; border-radius: 6px;">
+                                    @else
+                                        <img 
+                                            src="{{ asset('uploads/photos/default.jpg') }}" 
+                                            alt="Default Image" 
+                                            width="50" 
+                                            height="50" 
+                                            style="object-fit: cover; border-radius: 6px;">
+                                    @endif
                                     <h3 class="border-0 fs-5 pb-2 mb-0">{{ $pet->name }}</h3>
                                    <p>{{ Str::limit($pet->description, 50, '...') }}</p>
                                     

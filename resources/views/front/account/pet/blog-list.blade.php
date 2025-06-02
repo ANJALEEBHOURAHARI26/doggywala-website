@@ -45,7 +45,7 @@
                                             <tr>
                                                 <td>{{ $key+1 }}</td>
                                                 <td>
-                                                    <img width="50" src="{{ asset($blogList->image) }}" class="card-img-top rounded-top-4" alt="Dog Blog">
+                                                    <img width="50" src="{{ asset('uploads/blogs/' . $blogList->image) }}" class="card-img-top rounded-top-4" alt="Dog Blog">
                                                 </td>
                                                 <td>{{ $blogList->title }}</td>
                                                 <td>{{ $blogList->description }}</td>

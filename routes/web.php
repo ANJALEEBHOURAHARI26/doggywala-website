@@ -33,6 +33,9 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('admin.logout')
 
 
 Route::get('/blogs', [HomeController::class, 'blogs'])->name('blogs');
+Route::get('/blog-Details/{id}', [HomeController::class, 'blogsDetails'])->name('blog.details');
+
+
 Route::get('/contact-us', [HomeController::class, 'contactUs'])->name('conract-us');
 Route::post('/contact', [HomeController::class, 'send'])->name('contact.send');
 
