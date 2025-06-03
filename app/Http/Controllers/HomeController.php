@@ -163,6 +163,9 @@ class HomeController extends Controller
         return view('front.available-puppies-details', compact('pets', 'city', 'breed'));
     }
 
-
+    public function groomingServices()
+    {
+        return view('front.grooming-services');
+    }
 
 }

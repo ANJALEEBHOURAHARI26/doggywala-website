@@ -31,6 +31,17 @@ Route::post('/admin-login', [LoginController::class, 'login'])->name('admin.logi
 Route::post('/logout', [LoginController::class, 'logout'])->name('admin.logout');
 
 
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/search_pet', [HomeController::class, 'search'])->name('pets');
+Route::post('/save_pet', [HomeController::class, 'savePet'])->name('savePet');
+
+Route::get('/available-puppies/{city}',[HomeController::class, 'availablePuppies'])->name('available-puppies.city');
+Route::get('/available-puppies-search', [HomeController::class, 'searchPuppies'])->name('available-puppies.search');
+Route::get('/pet-details/{city}', [HomeController::class, 'show'])->name('pet.details');
+Route::get('/available-puppies-details/{breed}/{city}', [HomeController::class, 'available_puppies_details'])->name('available-puppies-details');
+
+Route::get('/grooming-services', [HomeController::class, 'groomingServices'])->name('grooming.services');
+
 
 Route::get('/blogs', [HomeController::class, 'blogs'])->name('blogs');
 Route::get('/blog-Details/{id}', [HomeController::class, 'blogsDetails'])->name('blog.details');
@@ -38,25 +49,6 @@ Route::get('/blog-Details/{id}', [HomeController::class, 'blogsDetails'])->name(
 
 Route::get('/contact-us', [HomeController::class, 'contactUs'])->name('conract-us');
 Route::post('/contact', [HomeController::class, 'send'])->name('contact.send');
-
-Route::get('/available-puppies/{city}',[HomeController::class, 'availablePuppies'])->name('available-puppies.city');
-
-Route::get('/available-puppies-search', [HomeController::class, 'searchPuppies'])->name('available-puppies.search');
-Route::get('/pet-details/{city}', [HomeController::class, 'show'])->name('pet.details');
-
-// Route::get('/available-puppies-details/{id}/{city}', [HomeController::class, 'available_puppies_details'])->name('available-puppies-details');
- Route::get('/available-puppies-details/{breed}/{city}', [HomeController::class, 'available_puppies_details'])->name('available-puppies-details');
-
-// Route::post('/submit-enquiry', [HomeController::class, 'submit'])->name('enquiry.submit');
-
-
-
-Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/search_pet', [HomeController::class, 'search'])->name('pets');
-Route::post('/save_pet', [HomeController::class, 'savePet'])->name('savePet');
-
-
-
 
 Route::post('/send_enquiry', [EnquiryController::class, 'store'])->name('enquiry.store');
 

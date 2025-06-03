@@ -172,7 +172,7 @@ h3.border-0.fs-5.pb-2.mb-0 {
 </section>
 
 
-<section class="py-5 bg-light" id="dog-grooming">
+<section class="py-5 bg-white" id="dog-grooming">
   <div class="container text-center">
     <h2 class="mb-4">Dog Grooming Services</h2>
     <p class="mb-5 text-muted">Give your furry friend the love they deserve with our premium dog grooming packages!</p>
@@ -185,7 +185,7 @@ h3.border-0.fs-5.pb-2.mb-0 {
           </div>
           <h5 class="card-title">Dog Bath & Blow Dry</h5>
           <p class="card-text">Warm water bath, gentle shampoo, blow dry, and brushing — your pup will love it!</p>
-          <a href="/contact-us" class="btn btn-outline-primary mt-3">Book Bath</a>
+          <a href="{{route('grooming.services')}}" class="btn btn-outline-primary mt-3">Book Bath</a>
         </div>
       </div>
 
@@ -196,7 +196,7 @@ h3.border-0.fs-5.pb-2.mb-0 {
           </div>
           <h5 class="card-title">Haircut & Styling</h5>
           <p class="card-text">Breed-specific cuts or custom trims. Our groomers make your dog look stylish and neat.</p>
-          <a href="/contact-us" class="btn btn-outline-success mt-3">Book Styling</a>
+          <a href="{{route('grooming.services')}}" class="btn btn-outline-success mt-3">Book Styling</a>
         </div>
       </div>
 
@@ -207,16 +207,42 @@ h3.border-0.fs-5.pb-2.mb-0 {
           </div>
           <h5 class="card-title">Nails, Ears & Hygiene</h5>
           <p class="card-text">Nail clipping, ear cleaning, and hygiene trim for comfort, health, and safety.</p>
-          <a href="/contact-us" class="btn btn-outline-danger mt-3">Book Hygiene</a>
+          <a href="{{route('grooming.services')}}" class="btn btn-outline-danger mt-3">Book Hygiene</a>
         </div>
       </div>
     </div>
   </div>
 </section>
 
+<section class="py-5 bg-light">
+  <div class="container">
+    <h3 class="text-center mb-4">Share Your Experience</h3>
+    <form action="#" method="POST" class="col-md-8 mx-auto">
+      @csrf
+      <div class="mb-3">
+        <input type="text" name="name" class="form-control" placeholder="Your Name" required>
+      </div>
+      <div class="mb-3">
+        <select name="rating" class="form-select" required>
+          <option value="">Select Rating</option>
+          <option value="5">★★★★★ - Excellent</option>
+          <option value="4">★★★★☆ - Very Good</option>
+          <option value="3">★★★☆☆ - Good</option>
+          <option value="2">★★☆☆☆ - Fair</option>
+          <option value="1">★☆☆☆☆ - Poor</option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <textarea name="message" class="form-control" rows="4" placeholder="Write your review" required></textarea>
+      </div>
+      <div class="text-center">
+        <button type="submit" class="btn btn-primary">Submit Review</button>
+      </div>
+    </form>
+  </div>
+</section>
 
-
-<section class="section-3 py-5">
+<section class="section-3 py-5 bg-white">
     <div class="container">
         <h2>Featured Pets</h2>
         <div class="row pt-5">
@@ -301,7 +327,7 @@ h3.border-0.fs-5.pb-2.mb-0 {
  -->
 
 
-<section class="section-3 bg-2 py-5">
+<section class="section-3 bg-2 py-5 bg-light">
     <div class="container">
         <h2>Latest Pets</h2>
         <div class="row pt-5">
@@ -361,7 +387,7 @@ h3.border-0.fs-5.pb-2.mb-0 {
 
 
 
-<section class="contact-info-section py-5" style="background-color: var(--bs-body-bg);">
+<section class="contact-info-section py-5 bg-white" style="background-color: var(--bs-body-bg);">
     <div class="container">
         <h2 class="text-center mb-4" style="font-weight: 600;">Get in Touch</h2>
         <p class="text-center text-muted mb-5">We love to hear from fellow dog lovers! Reach out through any of the ways below.</p>
@@ -397,6 +423,48 @@ h3.border-0.fs-5.pb-2.mb-0 {
         </div>
     </div>
 </section>
+
+<section class="py-5 bg-light">
+  <div class="container">
+    <h2 class="text-center fw-bold mb-5" style="color:#1f2e4d;">What Our Customers Say</h2>
+    
+    <div class="row g-4">
+      <!-- Review 1 -->
+      <div class="col-md-4">
+        <div class="card h-100 shadow-sm border-0">
+          <div class="card-body">
+            <p class="text-muted">"Amazing grooming service! My dog looks fresh and clean. Highly recommended."</p>
+            <h6 class="fw-bold mb-0">Ravi Sharma</h6>
+            <small class="text-muted">Dog Owner, Delhi</small>
+          </div>
+        </div>
+      </div>
+
+      <!-- Review 2 -->
+      <div class="col-md-4">
+        <div class="card h-100 shadow-sm border-0">
+          <div class="card-body">
+            <p class="text-muted">"Very professional and caring staff. My cat loved the hygiene treatment!"</p>
+            <h6 class="fw-bold mb-0">Megha Kapoor</h6>
+            <small class="text-muted">Cat Owner, Mumbai</small>
+          </div>
+        </div>
+      </div>
+
+      <!-- Review 3 -->
+      <div class="col-md-4">
+        <div class="card h-100 shadow-sm border-0">
+          <div class="card-body">
+            <p class="text-muted">"Affordable and top-notch grooming. Will definitely book again."</p>
+            <h6 class="fw-bold mb-0">Ankit Verma</h6>
+            <small class="text-muted">Dog Lover, Bangalore</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <script>
     @if(session('error'))
         toastr.error("{{ session('error') }}");
