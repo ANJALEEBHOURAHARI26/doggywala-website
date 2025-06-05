@@ -218,36 +218,55 @@ section .row {
 
 <section class="py-5" style="background-color: #f3f6fa;">
   <div class="container">
-    <h2 class="text-center fw-bold mb-4" style="color: #1f2e4d;">Get in Touch</h2>
+    <h2 class="text-center fw-bold mb-4" style="color: #1f2e4d;">Book a Grooming Appointment</h2>
     <div class="row justify-content-center">
       <div class="col-md-8">
-        <form>
+        <form action="#" method="POST">
+          @csrf
+          
           <div class="mb-3">
             <label for="name" class="form-label">Your Name</label>
-            <input type="text" class="form-control" id="name" placeholder="Enter your name">
+            <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name" required>
           </div>
+
           <div class="mb-3">
             <label for="phone" class="form-label">Phone Number</label>
-            <input type="tel" class="form-control" id="phone" placeholder="Enter your phone number">
+            <input type="tel" class="form-control" id="phone" name="phone" placeholder="Enter your phone number" required>
           </div>
+
           <div class="mb-3">
             <label for="service" class="form-label">Select Service</label>
-            <select class="form-select" id="service">
-              <option value="bath">Dog Bath & Blow Dry</option>
-              <option value="styling">Haircut & Styling</option>
-              <option value="hygiene">Ears & Hygiene</option>
+            <select class="form-select" id="service" name="service" required>
+              <option value="">-- Select --</option>
+              <option value="Dog Bath & Blow Dry">Dog Bath & Blow Dry</option>
+              <option value="Haircut & Styling">Haircut & Styling</option>
+              <option value="Ears & Hygiene">Ears & Hygiene</option>
+              <option value="Nail Clipping">Nail Clipping</option>
             </select>
           </div>
+
           <div class="mb-3">
-            <label for="message" class="form-label">Message</label>
-            <textarea class="form-control" id="message" rows="4" placeholder="Write your message here..."></textarea>
+            <label for="appointment_date" class="form-label">Select Date</label>
+            <input type="date" class="form-control" id="appointment_date" name="appointment_date" required>
           </div>
-          <button type="submit" class="btn btn-primary w-100">Send Message</button>
+
+          <div class="mb-3">
+            <label for="appointment_time" class="form-label">Select Time</label>
+            <input type="time" class="form-control" id="appointment_time" name="appointment_time" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="message" class="form-label">Message (Optional)</label>
+            <textarea class="form-control" id="message" name="message" rows="4" placeholder="Write your message here..."></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-success w-100">Book Now</button>
         </form>
       </div>
     </div>
   </div>
 </section>
+
 
 @endsection
 
