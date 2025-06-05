@@ -27,6 +27,40 @@
 h3.border-0.fs-5.pb-2.mb-0 {
     margin-top: 13px;
 }
+
+.icon-overlay {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 5;
+}
+
+.icon-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background-color: #FA7070;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  font-size: 14px;
+  transition: 0.3s;
+}
+
+.icon-btn.whatsapp {
+  background-color: #25D366;
+}
+
+.icon-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+
 </style>
 @section('main')
 @if(session('error'))
@@ -338,21 +372,28 @@ h3.border-0.fs-5.pb-2.mb-0 {
                         <div class="col-md-4">
                             <div class="card border-0 p-3 shadow mb-4">
                                 <div class="card-body">
-                                     @if ($pet->photo_path)
-                                        <img 
-                                            src="{{ asset('uploads/photos/' . $pet->photo_path) }}" 
-                                            alt="{{ $pet->name }}" 
-                                            width="50" 
-                                            height="50" 
-                                            style="object-fit: cover; border-radius: 6px;">
-                                    @else
-                                        <img 
-                                            src="{{ asset('uploads/photos/default.jpg') }}" 
-                                            alt="Default Image" 
-                                            width="50" 
-                                            height="50" 
-                                            style="object-fit: cover; border-radius: 6px;">
-                                    @endif
+                                 <div class="position-relative">
+                                        @if ($pet->photo_path)
+                                            <img 
+                                                src="{{ asset('uploads/photos/' . $pet->photo_path) }}" 
+                                                alt="{{ $pet->name }}" 
+                                                class="img-fluid rounded" 
+                                                style="width: 100%; height: 220px; object-fit: cover;">
+                                        @else
+                                            <img 
+                                                src="{{ asset('uploads/photos/default.jpg') }}" 
+                                                alt="Default Image" 
+                                                class="img-fluid rounded" 
+                                                style="width: 100%; height: 220px; object-fit: cover;">
+                                        @endif
+
+                                        {{-- Icon Overlay --}}
+                                        <div class="icon-overlay">
+                                            <a href="tel:{{ $pet->phone ?? '1234567890' }}" class="icon-btn call"><i class="fa fa-phone"></i></a>
+                                            <a href="https://wa.me/{{ $pet->whatsapp ?? '919999999999' }}" target="_blank" class="icon-btn whatsapp"><i class="bi bi-whatsapp"></i></a>
+                                        </div>
+                                    </div>
+
                                     <h3 class="border-0 fs-5 pb-2 mb-0">{{ $pet->name }}</h3>
                                    <p>{{ Str::limit($pet->description, 50, '...') }}</p>
                                     

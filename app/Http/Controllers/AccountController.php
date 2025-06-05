@@ -183,10 +183,10 @@ class AccountController extends Controller
     }
     
     public function createPet() {
-        return view('front.account.pet.create');
+        return view('front.account.pet.create-pet');
     }
 
-    public function store(Request $request)
+   public function store(Request $request)
     {
         $rules = [
             'name' => 'required|max:255',
@@ -197,10 +197,18 @@ class AccountController extends Controller
             'other_details' => 'required',
             'location' => 'required|max:50',
             'description' => 'required',
-            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048' 
-    ];
+            'lifespan' => 'nullable|max:255',
+            'weight' => 'nullable|max:255',
+            'height' => 'nullable|max:255',
+            'coat' => 'nullable|max:255',
+            'color' => 'nullable|max:255',
+            'temperament' => 'nullable|string',
+            'energy_level' => 'nullable|max:255',
+            'grooming' => 'nullable|max:255',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+        ];
 
-        $validator = Validator::make($request->all(),$rules);
+        $validator = Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
             return redirect()->route('account.createPet')->withInput()->withErrors($validator);
@@ -217,21 +225,33 @@ class AccountController extends Controller
         $pets->location = $request->location;
         $pets->description = $request->description;
         $pets->contact_info = $request->contact_info;
+
+        // New columns
+        $pets->lifespan = $request->lifespan;
+        $pets->weight = $request->weight;
+        $pets->height = $request->height;
+        $pets->coat = $request->coat;
+        $pets->color = $request->color;
+        $pets->temperament = $request->temperament;
+        $pets->energy_level = $request->energy_level;
+        $pets->grooming = $request->grooming;
+
         $pets->save();
 
         if ($request->photo != "") {
             $photo = $request->photo;
             $ext = $photo->getClientOriginalExtension();
-            $photoName = time().'.'.$ext; 
+            $photoName = time() . '.' . $ext;
 
-            $photo->move(public_path('uploads/photos'),$photoName);
+            $photo->move(public_path('uploads/photos'), $photoName);
 
             $pets->photo_path = $photoName;
             $pets->save();
         }
 
-        return redirect()->route('account.savePet')->with('success','Pet added successfully');
+        return redirect()->route('account.savePet')->with('success', 'Pet added successfully');
     }
+
     
     public function savePet(){
         $pets = Pets::orderBy('created_at','DESC')->paginate(5);
@@ -259,7 +279,8 @@ class AccountController extends Controller
     }
     
     // This method will show update pet page
-    public function update($id, Request $request) {
+    public function update($id, Request $request)
+    {
         $pet = Pets::findOrFail($id);
 
         $rules = [
@@ -271,17 +292,23 @@ class AccountController extends Controller
             'other_details' => 'required',
             'location' => 'required|max:50',
             'description' => 'required',
-            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048' // Updated to validate 'photo'
-    ];
+            'lifespan' => 'nullable|max:255',
+            'weight' => 'nullable|max:255',
+            'height' => 'nullable|max:255',
+            'coat' => 'nullable|max:255',
+            'color' => 'nullable|max:255',
+            'temperament' => 'nullable|string',
+            'energy_level' => 'nullable|max:255',
+            'grooming' => 'nullable|max:255',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+        ];
 
-        $validator = Validator::make($request->all(),$rules);
+        $validator = Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
-            return redirect()->route('account.createPet',$pet->id)->withInput()->withErrors($validator);
+            return redirect()->route('account.createPet', $pet->id)->withInput()->withErrors($validator);
         }
 
-        // here we will update pet 
-        
         $pet->name = $request->name;
         $pet->type = $request->type;
         $pet->breed = $request->breed;
@@ -292,29 +319,35 @@ class AccountController extends Controller
         $pet->other_details = $request->other_details;
         $pet->description = $request->description;
         $pet->contact_info = $request->contact_info;
+
+        // New columns
+        $pet->lifespan = $request->lifespan;
+        $pet->weight = $request->weight;
+        $pet->height = $request->height;
+        $pet->coat = $request->coat;
+        $pet->color = $request->color;
+        $pet->temperament = $request->temperament;
+        $pet->energy_level = $request->energy_level;
+        $pet->grooming = $request->grooming;
+
         $pet->save();
 
         if ($request->photo != "") {
+            File::delete(public_path('uploads/photos/' . $pet->photo_path));
 
-            // delete old image
-            File::delete(public_path('uploads/photos/'.$pet->photo_path));
-
-            // here we will store image
             $photo = $request->photo;
             $ext = $photo->getClientOriginalExtension();
-            $photoName = time().'.'.$ext; // Unique image name
+            $photoName = time() . '.' . $ext;
 
-            // Save image to pets directory
-            $photo->move(public_path('uploads/photos'),$photoName);
+            $photo->move(public_path('uploads/photos'), $photoName);
 
-            // Save image name in database
             $pet->photo_path = $photoName;
             $pet->save();
         }
 
-        return redirect()->route('account.savePet')->with('success','Pet updated successfully');
+        return redirect()->route('account.savePet')->with('success', 'Pet updated successfully');
     }
-    
+
     // This method will delete a product
     public function destroy($id) 
     {

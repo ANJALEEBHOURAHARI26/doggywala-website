@@ -25,10 +25,13 @@
               <img src="{{ asset('uploads/photos/' . $pet->photo_path) }}" class="puppy-img me-3" style="width: 140px;" alt="{{ $pet->name }} Puppy">
               <div>
                 <h5 class="fw-bold text-danger">{{ $pet->breed }}</h5>
-                <p class="mb-2">{{ $pet->description }}</p>
+                <p class="mb-2">
+                  {{ \Illuminate\Support\Str::limit($pet->description, 100, '...') }}
+                </p>
                 <a href="{{ route('available-puppies-details', ['breed' => $pet->breed, 'city' => $pet->location]) }}" class="read-more-btn">
-                    Read More <i class="bi bi-arrow-right ms-1"></i>
+                  Read More <i class="bi bi-arrow-right ms-1"></i>
                 </a>
+
               </div>
             </div>
           </div>

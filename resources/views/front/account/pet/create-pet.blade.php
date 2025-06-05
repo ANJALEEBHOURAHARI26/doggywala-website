@@ -56,7 +56,50 @@
                                     </div>
                                 </div>
 
-                                
+                                <div class="row">
+                                  <div class="col-md-6 mb-4">
+                                    <label for="lifespan" class="mb-2">Lifespan</label>
+                                    <input type="text" name="lifespan" id="lifespan" class="form-control" placeholder="e.g. 10-13 years">
+                                  </div>
+                                  <div class="col-md-6 mb-4">
+                                    <label for="weight" class="mb-2">Weight</label>
+                                    <input type="text" name="weight" id="weight" class="form-control" placeholder="e.g. M: 32-45 kg, F: 30-40 kg">
+                                  </div>
+                                </div>
+
+                                <div class="row">
+                                  <div class="col-md-6 mb-4">
+                                    <label for="height" class="mb-2">Height</label>
+                                    <input type="text" name="height" id="height" class="form-control" placeholder="e.g. M: 69cm, F: 65cm">
+                                  </div>
+                                  <div class="col-md-6 mb-4">
+                                    <label for="coat" class="mb-2">Coat Type</label>
+                                    <input type="text" name="coat" id="coat" class="form-control" placeholder="e.g. Short, shiny, sleek">
+                                  </div>
+                                </div>
+
+                                <div class="row">
+                                  <div class="col-md-6 mb-4">
+                                    <label for="color" class="mb-2">Color</label>
+                                    <input type="text" name="color" id="color" class="form-control" placeholder="e.g. Black, brown, blue, fawn">
+                                  </div>
+                                  <div class="col-md-6 mb-4">
+                                    <label for="temperament" class="mb-2">Temperament</label>
+                                    <input type="text" name="temperament" id="temperament" class="form-control" placeholder="e.g. Loyal, alert, intelligent">
+                                  </div>
+                                </div>
+
+                                <div class="row">
+                                  <div class="col-md-6 mb-4">
+                                    <label for="energy_level" class="mb-2">Energy Level</label>
+                                    <input type="text" name="energy_level" id="energy_level" class="form-control" placeholder="e.g. High">
+                                  </div>
+                                  <div class="col-md-6 mb-4">
+                                    <label for="grooming" class="mb-2">Grooming</label>
+                                    <input type="text" name="grooming" id="grooming" class="form-control" placeholder="e.g. Low maintenance">
+                                  </div>
+                                </div>
+
                                 <div class="row">
                                    <div class="col-md-6 mb-4">
                                         <label for="gender" class="mb-2">Gender</label>
