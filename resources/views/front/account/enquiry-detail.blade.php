@@ -1,4 +1,20 @@
 @extends('front.layouts.app')
+<style>
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  td, th {
+    padding: 8px;
+    border: 1px solid #ddd;
+    vertical-align: top;
+  }
+  .wrap-text {
+    max-width: 180px;    
+    word-wrap: break-word;
+    white-space: normal;
+  }
+</style>
 
 @section('main')
 <section class="section-5 bg-2">

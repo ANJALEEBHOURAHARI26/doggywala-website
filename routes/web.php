@@ -32,6 +32,8 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('admin.logout')
 
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::post('/submit-review', [HomeController::class, 'store'])->name('review.store');
+
 Route::get('/search_pet', [HomeController::class, 'search'])->name('pets');
 Route::post('/save_pet', [HomeController::class, 'savePet'])->name('savePet');
 
@@ -50,7 +52,8 @@ Route::get('/blog-Details/{id}', [HomeController::class, 'blogsDetails'])->name(
 Route::get('/contact-us', [HomeController::class, 'contactUs'])->name('conract-us');
 Route::post('/contact', [HomeController::class, 'send'])->name('contact.send');
 
-Route::post('/send_enquiry', [EnquiryController::class, 'store'])->name('enquiry.store');
+// Route::post('/send_enquiry', [EnquiryController::class, 'store'])->name('enquiry.store');
+Route::post('/enquiry-store', [EnquiryController::class, 'store'])->name('enquiry.store');
 
 
 
@@ -67,6 +70,8 @@ Route::group(['prefix' => 'admin','middleware' => 'checkRole'], function(){
     
 
     });
+
+
 
 Route::group(['prefix' => 'account', 'controller' => AccountController::class], function () {
 
@@ -105,9 +110,8 @@ Route::group(['prefix' => 'account', 'controller' => AccountController::class], 
         Route::any('/store-blog/{blogs}/edit', 'editBlog')->name('account.editBlog');
         Route::put('/store-blog/{blogs}', 'updateBlog')->name('account.updateBlog');
         Route::any('/store-blog/{blogs}/delete', 'destroyBlog')->name('account.destroyBlog');
-
-
         Route::any('/enquiry-list', 'enquiryList')->name('account.enquiryList');
+
 
     });
 });

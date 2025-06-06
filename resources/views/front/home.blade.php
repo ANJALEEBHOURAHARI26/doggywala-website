@@ -61,6 +61,37 @@ h3.border-0.fs-5.pb-2.mb-0 {
   box-shadow: 0 2px 6px rgba(0,0,0,0.3);
 }
 
+/**/
+ #multiReviewCarousel {
+    position: relative;
+    padding: 0 60px; /* space on both sides for arrows */
+  }
+
+  #multiReviewCarousel .carousel-control-prev {
+    width: 50px;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 20;
+  }
+
+  #multiReviewCarousel .carousel-control-next {
+    width: 50px;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 20;
+  }
+
+  #multiReviewCarousel .carousel-control-prev-icon,
+  #multiReviewCarousel .carousel-control-next-icon {
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    background-size: 40px 40px;
+  }
+
 </style>
 @section('main')
 @if(session('error'))
@@ -251,7 +282,7 @@ h3.border-0.fs-5.pb-2.mb-0 {
 <section class="py-5 bg-light">
   <div class="container">
     <h3 class="text-center mb-4">Share Your Experience</h3>
-    <form action="#" method="POST" class="col-md-8 mx-auto">
+    <form action="{{ route('review.store') }}" method="POST" id="reviewForm" class="col-md-8 mx-auto">
       @csrf
       <div class="mb-3">
         <input type="text" name="name" class="form-control" placeholder="Your Name" required>
@@ -270,8 +301,12 @@ h3.border-0.fs-5.pb-2.mb-0 {
         <textarea name="message" class="form-control" rows="4" placeholder="Write your review" required></textarea>
       </div>
       <div class="text-center">
-        <button type="submit" class="btn btn-primary">Submit Review</button>
+      <button type="submit" class="btn btn-primary" id="submitBtn">Submit Review</button>
+      <div id="loader" style="display:none; margin-top:10px;">
+        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...
       </div>
+    </div>
+
     </form>
   </div>
 </section>
@@ -468,43 +503,46 @@ h3.border-0.fs-5.pb-2.mb-0 {
 <section class="py-5 bg-light">
   <div class="container">
     <h2 class="text-center fw-bold mb-5" style="color:#1f2e4d;">What Our Customers Say</h2>
-    
-    <div class="row g-4">
-      <!-- Review 1 -->
-      <div class="col-md-4">
-        <div class="card h-100 shadow-sm border-0">
-          <div class="card-body">
-            <p class="text-muted">"Amazing grooming service! My dog looks fresh and clean. Highly recommended."</p>
-            <h6 class="fw-bold mb-0">Ravi Sharma</h6>
-            <small class="text-muted">Dog Owner, Delhi</small>
+
+    <div id="multiReviewCarousel" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        @foreach ($reviews->chunk(3) as $chunkIndex => $reviewChunk)
+          <div class="carousel-item {{ $chunkIndex == 0 ? 'active' : '' }}">
+            <div class="row g-4">
+              @foreach ($reviewChunk as $review)
+                <div class="col-md-4">
+                  <div class="card h-100 shadow-sm border-0">
+                    <div class="card-body">
+                      <p class="text-muted">"{{ $review->message }}"</p>
+                      <h6 class="fw-bold mb-2">{{ $review->name }}</h6>
+                      <div class="mb-3" style="color: #f39c12;">
+                        {!! str_repeat('★', $review->rating) !!}
+                        {!! str_repeat('☆', 5 - $review->rating) !!}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              @endforeach
+            </div>
           </div>
-        </div>
+        @endforeach
       </div>
 
-      <!-- Review 2 -->
-      <div class="col-md-4">
-        <div class="card h-100 shadow-sm border-0">
-          <div class="card-body">
-            <p class="text-muted">"Very professional and caring staff. My cat loved the hygiene treatment!"</p>
-            <h6 class="fw-bold mb-0">Megha Kapoor</h6>
-            <small class="text-muted">Cat Owner, Mumbai</small>
-          </div>
-        </div>
-      </div>
-
-      <!-- Review 3 -->
-      <div class="col-md-4">
-        <div class="card h-100 shadow-sm border-0">
-          <div class="card-body">
-            <p class="text-muted">"Affordable and top-notch grooming. Will definitely book again."</p>
-            <h6 class="fw-bold mb-0">Ankit Verma</h6>
-            <small class="text-muted">Dog Lover, Bangalore</small>
-          </div>
-        </div>
-      </div>
+      <!-- Carousel Controls -->
+      <button class="carousel-control-prev" type="button" data-bs-target="#multiReviewCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon bg-dark rounded-circle" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#multiReviewCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon bg-dark rounded-circle" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
     </div>
   </div>
 </section>
+
+
+
 
 <script>
     @if(session('error'))
@@ -524,5 +562,11 @@ h3.border-0.fs-5.pb-2.mb-0 {
     @endif
 </script>
 
+<script>
+  document.getElementById('reviewForm').addEventListener('submit', function() {
+    document.getElementById('submitBtn').disabled = true;
+    document.getElementById('loader').style.display = 'inline-block';
+  });
+</script>
 
 @endsection

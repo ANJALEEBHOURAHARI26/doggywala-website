@@ -74,7 +74,7 @@
 
               <div class="col-md-6">
                 <select class="form-select" id="cityname" name="cityname" required>
-                  <option value="">Select City</option>
+                  <option value="" disabled selected>Select City</option>
                   <option>Mumbai</option>
                   <option>Pune</option>
                   <option>Bangalore</option>
@@ -90,7 +90,7 @@
 
               <div class="col-md-6">
                 <select class="form-select" id="breedname" name="breedname" required>
-                  <option value="">Select Breed</option>
+                  <option value="" disabled selected>Select Breed</option>
                   <option>Beagle</option>
                   <option>Boxer</option>
                   <option>Cocker Spaniel</option>
@@ -115,7 +115,7 @@
 
               <div class="col-md-6">
                 <select class="form-select" id="price_range" name="price_range" required>
-                  <option value="">Price Range</option>
+                  <option value="" disabled selected>Select Price Range</option>
                   <option value="1,000 - 10,000">1,000 - 10,000</option>
                   <option value="10,000 - 20,000">10,000 - 20,000</option>
                   <option value="20,000 - 30,000">20,000 - 30,000</option>
@@ -142,8 +142,12 @@
               </div>
 
               <div class="col-md-12 text-center">
-                <button type="submit" class="btn btn-success mt-3 px-5">Send Enquiry</button>
+                <button type="submit" id="submitBtn" class="btn btn-success mt-3 px-5">
+                  <span id="btnText">Send Enquiry</span>
+                  <span id="btnSpinner" class="spinner-border spinner-border-sm ms-2 d-none" role="status" aria-hidden="true"></span>
+                </button>
               </div>
+
             </div>
           </form>
 
@@ -205,5 +209,17 @@
   </div>
 </section> -->
 
+<script>
+  document.getElementById('enquiry_form').addEventListener('submit', function() {
+    const btn = document.getElementById('submitBtn');
+    const btnText = document.getElementById('btnText');
+    const btnSpinner = document.getElementById('btnSpinner');
+
+    btn.disabled = true;
+
+    btnText.style.display = 'none';
+    btnSpinner.classList.remove('d-none');
+  });
+</script>
 
 @endsection

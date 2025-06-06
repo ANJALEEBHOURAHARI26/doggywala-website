@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Enquiry;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class EnquiryController extends Controller
 {
@@ -28,19 +29,25 @@ class EnquiryController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $data = $request->validate([
             'name' => 'required|max:30',
             'cityname' => 'required',
             'breedname' => 'required',
             'price_range' => 'required',
-            'email' => 'nullable|email|max:30',
-            'phone' => 'nullable|regex:/[7-9]{1}[0-9]{9}/',
-            'message' => 'nullable|max:100',
+            'email' => 'required|email',
+            'phone' => 'required|digits:10',
+            'message' => 'required|max:100',
+            'functionname' => 'nullable',
         ]);
 
-        Enquiry::create($request->all());
+        $enquiry = Enquiry::create($data);
 
-        return redirect()->back()->with('success', 'Your enquiry has been submitted successfully!');
+        Mail::send('front.email.enquiry-email', ['data' => $data], function ($message) use ($data) {
+            $message->to('anjalibhorhari008@gmail.com')
+                    ->subject('New Puppy Enquiry from ' . $data['name']);
+        });
+
+        return back()->with('success', 'Your enquiry has been sent successfully!');
     }
 
     /**

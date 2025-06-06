@@ -1,80 +1,77 @@
 @extends('front.layouts.app')
+
 <style>
-/* Banner Styling */
-.section-02 {
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    height: 100vh;
-    padding: 0 15px;
-    display: flex;
-    align-items: center;
-    position: relative;
+/* Global Reset */
+* {
+  box-sizing: border-box;
 }
 
-/* Headings */
+.section-02 {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 400px;
+  padding: 60px 15px 40px;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
 h1.slide__text-heading {
-    font-size: 3rem;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
 }
 
 .lead {
-    font-size: 1.25rem;
-    font-weight: 300;
+  font-size: 1.125rem;
+  font-weight: 400;
+  margin-bottom: 1rem;
 }
 
-/* Service Cards */
 .card:hover {
-    transform: translateY(-5px);
-    transition: all 0.3s ease-in-out;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-}
-.mt-3.lead {
-    margin-top: -1rem !important;
+  transform: translateY(-5px);
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
-section.py-5 {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-h2.display-5 {
-  font-size: 3rem;
-  margin: 49px;
+h2.display-5,
+section h2 {
+  font-size: 2.2rem;
+  margin-bottom: 2rem;
 }
 
 p {
-  font-size: 1.1rem;
-  letter-spacing: 0.05em;
-}
-section h2 {
-  margin-bottom: 4rem;
-}
-section .row {
-  margin-top: 2rem;
+  font-size: 1rem;
+  letter-spacing: 0.03em;
 }
 
+@media screen and (max-width: 768px) {
+  h1.display-4 {
+    font-size: 2rem;
+  }
+  h2.display-5,
+  section h2 {
+    font-size: 1.75rem;
+  }
+}
 </style>
 
 @section('main')
-<section class="section-02 d-flex align-items-center" 
-         style="background-image: url('{{ asset('assets/images/pet-sitters-dog-boarding-dog-walkers-nearby.jpg') }}'); 
-                background-size: cover; background-position: center; height: 433px;;width: 1359px; margin-top: 78px;">
-
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 text-white">
-                <h1 class="display-4 fw-bold mt-5">Welcome to Premium Pet Grooming</h1>
-                <p class="lead mt-3">Get the best grooming services for your adorable pets. Book an appointment today!</p>
-            </div>
-        </div>
+<section class="section-02" style="background-image: url('{{ asset('assets/images/pet-sitters-dog-boarding-dog-walkers-nearby.jpg') }}');">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 text-white">
+        <h1 class="display-4 fw-bold mt-5">Welcome to Premium Pet Grooming</h1>
+        <p class="lead">Get the best grooming services for your adorable pets. Book an appointment today!</p>
+      </div>
     </div>
+  </div>
 </section>
-
 
 <section class="py-5 bg-light">
   <div class="container">
-    <h2 class="text-center fw-bold mb-4" style="color:#1f2e4d;">Book Bath & Blow Dry</h2>
+    <h2 class="text-center fw-bold" style="color:#1f2e4d;">Book Bath & Blow Dry</h2>
     <div class="row align-items-center">
       <div class="col-md-6">
         <img src="{{ asset('assets/images/DogBath&BlowDry.jpg') }}" alt="Bath" class="img-fluid rounded shadow">
@@ -93,7 +90,7 @@ section .row {
 
 <section class="py-5">
   <div class="container">
-    <h2 class="text-center fw-bold mb-4" style="color:#1f2e4d;">Book Haircut & Styling</h2>
+    <h2 class="text-center fw-bold" style="color:#1f2e4d;">Book Haircut & Styling</h2>
     <div class="row align-items-center flex-md-row-reverse">
       <div class="col-md-6">
         <img src="{{ asset('assets/images/HairCut&styling.jpg') }}" alt="Styling" class="img-fluid rounded shadow">
@@ -110,10 +107,9 @@ section .row {
   </div>
 </section>
 
-
 <section class="py-5 bg-light">
   <div class="container">
-    <h2 class="text-center fw-bold mb-4" style="color:#1f2e4d;">Book Hygiene & Care</h2>
+    <h2 class="text-center fw-bold" style="color:#1f2e4d;">Book Hygiene & Care</h2>
     <div class="row align-items-center">
       <div class="col-md-6">
         <img src="{{ asset('assets/images/earcleaning.jpg') }}" alt="Hygiene" class="img-fluid rounded shadow">
@@ -130,91 +126,32 @@ section .row {
   </div>
 </section>
 
-<!-- ✨ Our Services Section -->
 <section class="py-5" style="background-color: #f9fff9;">
   <div class="container">
     <h2 class="text-center mb-5 fw-bold" style="color: #1f2e4d;">Our Grooming Services</h2>
-
     <div class="row g-4">
-
-      <!-- Service 1 -->
+      @php
+        $services = [
+          ['title' => 'Dog Bath & Blow Dry', 'img' => 'DogBath&BlowDry.jpg', 'desc' => 'Gentle bath with premium products followed by a soothing blow dry.'],
+          ['title' => 'Haircut & Styling', 'img' => 'HairCut&styling.jpg', 'desc' => 'Stylish trims tailored to your dog’s breed and personality.'],
+          ['title' => 'Nail Clipping', 'img' => 'NailsCuting.jpg', 'desc' => 'Safe and gentle nail clipping to keep your pet’s paws healthy.'],
+          ['title' => 'Ears & Hygiene', 'img' => 'earcleaning.jpg', 'desc' => 'Deep ear cleaning and hygiene maintenance for total wellness.']
+        ];
+      @endphp
+      @foreach ($services as $service)
       <div class="col-md-6 col-lg-3">
         <div class="card h-100 shadow-sm text-center border-0">
           <div class="card-body">
-            <img src="{{ asset('assets/images/DogBath&BlowDry.jpg') }}" alt="Dog Bath" class="mb-3" style="width: 234px;">
-            <h5 class="card-title">Dog Bath & Blow Dry</h5>
-            <p class="card-text">Gentle bath with premium products followed by a soothing blow dry.</p>
+            <img src="{{ asset('assets/images/' . $service['img']) }}" alt="{{ $service['title'] }}" class="img-fluid rounded mb-3">
+            <h5 class="card-title">{{ $service['title'] }}</h5>
+            <p class="card-text">{{ $service['desc'] }}</p>
           </div>
         </div>
       </div>
-
-      <!-- Service 2 -->
-      <div class="col-md-6 col-lg-3">
-        <div class="card h-100 shadow-sm text-center border-0">
-          <div class="card-body">
-            <img src="{{ asset('assets/images/HairCut&styling.jpg') }}" alt="Haircut" class="mb-3" style="width: 234px;">
-            <h5 class="card-title">Haircut & Styling</h5>
-            <p class="card-text">Stylish trims tailored to your dog’s breed and personality.</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Service 3 -->
-      <div class="col-md-6 col-lg-3">
-        <div class="card h-100 shadow-sm text-center border-0">
-          <div class="card-body">
-            <img src="{{ asset('assets/images/NailsCuting.jpg') }}" alt="Nail Clipping" class="mb-3" style="width: 234px;">
-            <h5 class="card-title">Nail Clipping</h5>
-            <p class="card-text">Safe and gentle nail clipping to keep your pet’s paws healthy.</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Service 4 -->
-      <div class="col-md-6 col-lg-3">
-        <div class="card h-100 shadow-sm text-center border-0">
-          <div class="card-body">
-            <img src="{{ asset('assets/images/earcleaning.jpg') }}" alt="Ear Cleaning" class="mb-3" style="width: 234px;">
-            <h5 class="card-title">Ears & Hygiene</h5>
-            <p class="card-text">Deep ear cleaning and hygiene maintenance for total wellness.</p>
-          </div>
-        </div>
-      </div>
-
+      @endforeach
     </div>
   </div>
 </section>
-
-<section class="py-5" style="background-color: #e9f7ef;">
-  <div class="container">
-     <h2 class="text-center fw-bold mb-5" style="color:#1f2e4d; letter-spacing: 1px; margin-bottom: 4rem;">OUR STATS</h2>
-    <div class="row text-center g-4" style="margin-top: 2rem;">
-      
-      <div class="col-6 col-md-3">
-        <h2 class="display-5 fw-bold text-success mb-2">2000</h2>
-        <p class="text-muted fw-semibold" style="letter-spacing: 0.05em;">Happy Customers</p>
-      </div>
-      
-      <div class="col-6 col-md-3">
-        <h2 class="display-5 fw-bold text-success mb-2">2000</h2>
-        <p class="text-muted fw-semibold" style="letter-spacing: 0.05em;">Projects</p>
-      </div>
-      
-      <div class="col-6 col-md-3">
-        <h2 class="display-5 fw-bold text-success mb-2">3000</h2>
-        <p class="text-muted fw-semibold" style="letter-spacing: 0.05em;">Puppies-Kitten Adoption</p>
-      </div>
-      
-      <div class="col-6 col-md-3">
-        <h2 class="display-5 fw-bold text-success mb-2">65</h2>
-        <p class="text-muted fw-semibold" style="letter-spacing: 0.05em;">Event Host</p>
-      </div>
-      
-    </div>
-  </div>
-</section>
-
-
 
 <section class="py-5" style="background-color: #f3f6fa;">
   <div class="container">
@@ -223,15 +160,14 @@ section .row {
       <div class="col-md-8">
         <form action="#" method="POST">
           @csrf
-          
           <div class="mb-3">
             <label for="name" class="form-label">Your Name</label>
-            <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name" required>
+            <input type="text" class="form-control" id="name" name="name" required>
           </div>
 
           <div class="mb-3">
             <label for="phone" class="form-label">Phone Number</label>
-            <input type="tel" class="form-control" id="phone" name="phone" placeholder="Enter your phone number" required>
+            <input type="tel" class="form-control" id="phone" name="phone" required>
           </div>
 
           <div class="mb-3">
@@ -257,7 +193,7 @@ section .row {
 
           <div class="mb-3">
             <label for="message" class="form-label">Message (Optional)</label>
-            <textarea class="form-control" id="message" name="message" rows="4" placeholder="Write your message here..."></textarea>
+            <textarea class="form-control" id="message" name="message" rows="4"></textarea>
           </div>
 
           <button type="submit" class="btn btn-success w-100">Book Now</button>
@@ -266,9 +202,4 @@ section .row {
     </div>
   </div>
 </section>
-
-
 @endsection
-
-
-

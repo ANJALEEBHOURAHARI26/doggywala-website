@@ -6,6 +6,7 @@ use App\Models\Pets;
 use App\Models\SavedPet;
 use Illuminate\Http\Request;
 use App\Models\Blog;
+use App\Models\Review;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
@@ -14,9 +15,10 @@ class HomeController extends Controller
     public function index()
     {
         $featuredPets = Pets::whereIn('id', [1, 3, 5, 7])->get();
-        $latestPets = Pets::latest()->take(4)->get(); // top 4 latest pets
+        $latestPets = Pets::latest()->take(4)->get();
+        $reviews = Review::latest()->get();
 
-        return view('front.home', compact('featuredPets', 'latestPets'));
+        return view('front.home', compact('featuredPets', 'latestPets','reviews'));
     }
 
     // public function search(Request $request)
@@ -166,6 +168,23 @@ class HomeController extends Controller
     public function groomingServices()
     {
         return view('front.grooming-services');
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'rating' => 'required|integer|min:1|max:5',
+            'message' => 'required|string|max:1000',
+        ]);
+
+        Review::create([
+            'name' => $request->name,
+            'rating' => $request->rating,
+            'message' => $request->message,
+        ]);
+
+        return redirect()->back()->with('success', 'Thank you for your review!');
     }
 
 }
