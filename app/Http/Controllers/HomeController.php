@@ -8,7 +8,12 @@ use Illuminate\Http\Request;
 use App\Models\Blog;
 use App\Models\Review;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Booking;
+use App\Mail\BookingConfirmation;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
+
 
 class HomeController extends Controller
 {
@@ -187,4 +192,34 @@ class HomeController extends Controller
         return redirect()->back()->with('success', 'Thank you for your review!');
     }
 
+    public function submitBooking(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string',
+            'phone' => 'required|string|digits:10',
+            'service' => 'required|string',
+            'appointment_date' => 'required|date',
+            'appointment_time' => 'required',
+            'message' => 'nullable|string',
+        ]);
+
+        try {
+            DB::transaction(function () use ($request) {
+                // Step 1: Save booking
+                $booking = Booking::create($request->all());
+
+                // Step 2: Send email
+                Mail::send('front.email.booking-confirmation', ['booking' => $booking], function ($message) {
+                    $message->to('anjalibhorhari008@gmail.com')
+                            ->subject('New Grooming Appointment Booking');
+                });
+            });
+
+            return back()->with('success', 'Your booking has been submitted!');
+        } catch (\Exception $e) {
+            // Log and show error message
+            Log::error('Booking failed (email/db): ' . $e->getMessage());
+            return back()->with('error', 'Booking failed. Please try again later.');
+        }
+    }
 }

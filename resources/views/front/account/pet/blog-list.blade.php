@@ -32,9 +32,9 @@
                                 <thead>
                                     <tr>
                                         <th>ID</th>
-                                        <th>Title</th>
                                         <th>Image</th>
-                                        <th>Description</th>
+                                        <th>Title</th>
+                                        <!-- <th>Description</th> -->
                                         <th>Created At</th>
                                         <th>Actions</th> 
                                     </tr>
@@ -45,10 +45,10 @@
                                             <tr>
                                                 <td>{{ $key+1 }}</td>
                                                 <td>
-                                                    <img width="50" src="{{ asset('uploads/blogs/' . $blogList->image) }}" class="card-img-top rounded-top-4" alt="Dog Blog">
+                                                    <img    style="width: 98px;height: 70px;" src="{{ asset('uploads/blogs/' . $blogList->image) }}" class="card-img-top rounded-top-4" alt="Dog Blog">
                                                 </td>
                                                 <td>{{ $blogList->title }}</td>
-                                                <td>{{ $blogList->description }}</td>
+                                                <!-- <td>{{ $blogList->description }}</td> -->
                                                 <td>{{ \Carbon\Carbon::parse($blogList->created_at)->format('d M, Y') }}</td> 
                                                 <td>
                                                     <a href="{{ route('account.editBlog',$blogList->id) }}" class="btn btn-dark btn-sm">Edit</a>

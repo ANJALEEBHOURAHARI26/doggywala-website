@@ -44,8 +44,8 @@
                     
                                 <div class="row">
                                     <div class="col-md-6 mb-4">
-                                        <label for="breed" class="mb-2">Breed</label>
-                                        <input type="text" name="breed" id="breed" class="form-control" placeholder="Breed">
+                                        <label for="breed" class="mb-2">Breed<span class="req">*</span></label>
+                                        <input type="text" name="breed" id="breed" class="@error('breed') is-invalid  @enderror form-control" placeholder="Breed" required>
                                     </div>
                                     <div class="col-md-6 mb-4">
                                         <label for="age" class="mb-2">Age<span class="req">*</span></label>
@@ -104,7 +104,7 @@
                                    <div class="col-md-6 mb-4">
                                         <label for="gender" class="mb-2">Gender</label>
                                         <select name="gender" id="gender" class="form-control">
-                                            <option value="">-- Select Gender --</option>
+                                            <option value="" disabled selected>-- Select Gender --</option>
                                             <option value="Male">Male</option>
                                             <option value="Female">Female</option>
                                         </select>

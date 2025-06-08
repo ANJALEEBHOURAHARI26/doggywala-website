@@ -158,20 +158,28 @@ p {
     <h2 class="text-center fw-bold mb-4" style="color: #1f2e4d;">Book a Grooming Appointment</h2>
     <div class="row justify-content-center">
       <div class="col-md-8">
-        <form action="#" method="POST">
+
+        @if(session('success'))
+          <div class="alert alert-success mt-3">
+              {{ session('success') }}
+          </div>
+        @endif
+
+        <form id="bookingForm" action="{{ route('booking.submit') }}" method="POST" onsubmit="handleSubmit(this)">
           @csrf
+
           <div class="mb-3">
-            <label for="name" class="form-label">Your Name</label>
+            <label for="name" class="form-label">Your Name <span class="text-danger">*</span></label>
             <input type="text" class="form-control" id="name" name="name" required>
           </div>
 
           <div class="mb-3">
-            <label for="phone" class="form-label">Phone Number</label>
-            <input type="tel" class="form-control" id="phone" name="phone" required>
+            <label for="phone" class="form-label">Phone Number <span class="text-danger">*</span></label>
+            <input type="tel" class="form-control" id="phone" name="phone" required pattern="[0-9]{10}" maxlength="10" minlength="10" title="Please enter a 10-digit phone number">
           </div>
 
           <div class="mb-3">
-            <label for="service" class="form-label">Select Service</label>
+            <label for="service" class="form-label">Select Service <span class="text-danger">*</span></label>
             <select class="form-select" id="service" name="service" required>
               <option value="">-- Select --</option>
               <option value="Dog Bath & Blow Dry">Dog Bath & Blow Dry</option>
@@ -182,12 +190,12 @@ p {
           </div>
 
           <div class="mb-3">
-            <label for="appointment_date" class="form-label">Select Date</label>
+            <label for="appointment_date" class="form-label">Select Date <span class="text-danger">*</span></label>
             <input type="date" class="form-control" id="appointment_date" name="appointment_date" required>
           </div>
 
           <div class="mb-3">
-            <label for="appointment_time" class="form-label">Select Time</label>
+            <label for="appointment_time" class="form-label">Select Time <span class="text-danger">*</span></label>
             <input type="time" class="form-control" id="appointment_time" name="appointment_time" required>
           </div>
 
@@ -196,10 +204,32 @@ p {
             <textarea class="form-control" id="message" name="message" rows="4"></textarea>
           </div>
 
-          <button type="submit" class="btn btn-success w-100">Book Now</button>
+          <button type="submit" class="btn btn-success w-100" id="submitBtn">
+            <span id="btnText">Book Now</span>
+            <span id="btnLoader" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+          </button>
         </form>
+
       </div>
     </div>
   </div>
 </section>
+
+<script>
+  function handleSubmit(form) {
+    const btnText = document.getElementById('btnText');
+    const btnLoader = document.getElementById('btnLoader');
+
+    btnText.classList.add('d-none');
+    btnLoader.classList.remove('d-none');
+    document.getElementById('submitBtn').disabled = true;
+  }
+
+
+  @if(session('success'))
+    toastr.success("{{ session('success') }}");
+  @endif
+
+</script>
+
 @endsection

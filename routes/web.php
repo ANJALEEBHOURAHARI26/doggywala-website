@@ -56,6 +56,7 @@ Route::post('/contact', [HomeController::class, 'send'])->name('contact.send');
 Route::post('/enquiry-store', [EnquiryController::class, 'store'])->name('enquiry.store');
 
 
+Route::post('/book-appointment', [HomeController::class, 'submitBooking'])->name('booking.submit');
 
 Route::group(['prefix' => 'admin','middleware' => 'checkRole'], function(){
     Route::get('/dashboard',[DashboardController::class,'index'])->name('admin.dashboard');
@@ -111,6 +112,8 @@ Route::group(['prefix' => 'account', 'controller' => AccountController::class], 
         Route::put('/store-blog/{blogs}', 'updateBlog')->name('account.updateBlog');
         Route::any('/store-blog/{blogs}/delete', 'destroyBlog')->name('account.destroyBlog');
         Route::any('/enquiry-list', 'enquiryList')->name('account.enquiryList');
+
+        Route::any('/booking-list', 'bookingList')->name('account.bookingList');
 
 
     });

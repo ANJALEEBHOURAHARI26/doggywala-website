@@ -36,7 +36,7 @@
                                         <label for="image" class="mb-2">Image</label>
                                         <input  type="file" name="image" id="image" class="@error('image') is-invalid  @enderror form-control" accept="image/*">
                                        
-                                            <img class="50 my-3" src="{{ asset($blog->image) }}" alt="{{ $blog->title }}">
+                                            <img class="50 my-3" src="{{ asset('uploads/blogs/' . $blog->image) }}" alt="{{ $blog->title }}">
                                        
                                     </div>
                                 </div>

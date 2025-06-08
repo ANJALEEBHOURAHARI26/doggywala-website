@@ -541,9 +541,6 @@ h3.border-0.fs-5.pb-2.mb-0 {
   </div>
 </section>
 
-
-
-
 <script>
     @if(session('error'))
         toastr.error("{{ session('error') }}");

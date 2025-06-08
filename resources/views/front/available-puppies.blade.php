@@ -220,6 +220,10 @@
     btnText.style.display = 'none';
     btnSpinner.classList.remove('d-none');
   });
+
+  @if(session('success'))
+    toastr.success("{{ session('success') }}");
+  @endif
 </script>
 
 @endsection

@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Models\Blog;
 use App\Models\Enquiry;
+use App\Models\Booking;
 use Illuminate\Support\Facades\Validator;
 
 class AccountController extends Controller
@@ -526,6 +527,22 @@ class AccountController extends Controller
 
        return view('front.account.enquiry-detail', compact('enquiries'));
     }
+
+    public function bookingList(Request $request)
+    {
+        $search = $request->input('search');
+
+        $bookings = Booking::when($search, function ($query, $search) {
+            $query->where('name', 'like', "%{$search}%")
+                  ->orWhere('phone', 'like', "%{$search}%")
+                  ->orWhere('service', 'like', "%{$search}%");
+        })
+        ->latest()
+        ->get();
+
+        return view('front.account.booking-list', compact('bookings'));
+    }
+
 
 }
 
