@@ -58,6 +58,9 @@ Route::get('/grooming-services', [HomeController::class, 'groomingServices'])->n
 Route::get('/grooming-service/{slug}', [HomeController::class, 'groomingServiceDetails'])->name('grooming.service.details');
 Route::post('/book-appointment', [HomeController::class, 'submitBooking'])->name('booking.submit');
 
+Route::get('/api/available-slots', [BookingController::class, 'getAvailableSlots']);
+
+
 Route::group(['prefix' => 'admin','middleware' => 'checkRole'], function(){
     Route::get('/dashboard',[DashboardController::class,'index'])->name('admin.dashboard');
     Route::get('/users',[UserController::class,'index'])->name('admin.users');

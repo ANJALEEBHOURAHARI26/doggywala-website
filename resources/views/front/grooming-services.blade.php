@@ -275,24 +275,6 @@ p {
   </div>
 </section>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-
-<script>
-  function handleSubmit(form) {
-    const btnText = document.getElementById('btnText');
-    const btnLoader = document.getElementById('btnLoader');
-
-    btnText.classList.add('d-none');
-    btnLoader.classList.remove('d-none');
-    document.getElementById('submitBtn').disabled = true;
-  }
-
-
-  @if(session('success'))
-    toastr.success("{{ session('success') }}");
-  @endif
-
-</script>
-
 <script>
   // Date picker
   flatpickr("#appointment_date", {
@@ -309,5 +291,22 @@ p {
 
 </script>
 
+<script>
+  function handleSubmit(form) {
+    const btnText = document.getElementById('btnText');
+    const btnLoader = document.getElementById('btnLoader');
 
+    btnText.classList.add('d-none');
+    btnLoader.classList.remove('d-none');
+    document.getElementById('submitBtn').disabled = true;
+  }
+
+
+  @if(session('success'))
+    toastr.success("{{ session('success') }}");
+  @elseif(session('error'))
+    toastr.error("{{ session('error') }}");
+  @endif
+
+</script>
 @endsection

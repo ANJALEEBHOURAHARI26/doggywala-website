@@ -173,39 +173,93 @@ class HomeController extends Controller
         return redirect()->back()->with('success', 'Thank you for your review!');
     }
 
-   public function submitBooking(Request $request)
-    {
-        $request->validate([
-            'name' => 'required|string',
-            'phone' => 'required|string|digits:10',
-            'service' => 'required|string',
-            'appointment_date' => 'required|date',
-            'appointment_time' => 'required',
-            'message' => 'nullable|string',
-        ]);
+   // public function submitBooking(Request $request)
+   //  {
+   //      $request->validate([
+   //          'name' => 'required|string',
+   //          'phone' => 'required|string|digits:10',
+   //          'service' => 'required|string',
+   //          'appointment_date' => 'required|date',
+   //          'appointment_time' => 'required',
+   //          'message' => 'nullable|string',
+   //      ]);
 
-        try {
-            DB::transaction(function () use ($request) {
+   //      try {
+   //          $time24 = date("H:i:s", strtotime($request->appointment_time));
 
-                $time24 = date("H:i:s", strtotime($request->appointment_time));
+   //          $isSlotTaken = Booking::where('service', $request->service)
+   //              ->where('appointment_date', $request->appointment_date)
+   //              ->where('appointment_time', $time24)
+   //              ->exists();
 
-                $data = $request->all();
-                $data['appointment_time'] = $time24;
+   //          if ($isSlotTaken) {
+   //              return back()
+   //                  ->withInput()
+   //                  ->with('error', 'This slot is already booked. Please choose a different time.');
+   //          }
 
-                $booking = Booking::create($data);
+   //          // Proceed if slot is free
+   //          DB::transaction(function () use ($request, $time24) {
+   //              $data = $request->all();
+   //              $data['appointment_time'] = $time24;
 
-                Mail::send('front.email.booking-confirmation', ['booking' => $booking], function ($message) {
-                    $message->to('anjalibhorhari008@gmail.com')
-                            ->subject('New Grooming Appointment Booking');
-                });
-            });
+   //              $booking = Booking::create($data);
 
-            return back()->with('success', 'Your booking has been submitted!');
-        } catch (\Exception $e) {
-            Log::error('Booking failed (email/db): ' . $e->getMessage());
-            return back()->with('error', 'Booking failed. Please try again later.');
+   //              Mail::send('front.email.booking-confirmation', ['booking' => $booking], function ($message) {
+   //                  $message->to('anjalibhorhari008@gmail.com')
+   //                          ->subject('New Grooming Appointment Booking');
+   //              });
+   //          });
+
+   //          return back()->with('success', 'Your booking has been submitted!');
+   //      } catch (\Exception $e) {
+   //          Log::error('Booking failed (email/db): ' . $e->getMessage());
+   //          return back()->with('error', 'Booking failed. Please try again later.');
+   //      }
+   //  }
+
+    public function submitBooking(Request $request)
+{
+    $request->validate([
+        'name' => 'required|string',
+        'phone' => 'required|string|digits:10',
+        'service' => 'required|integer',
+        'appointment_date' => 'required|date',
+        'appointment_time' => 'required',
+        'message' => 'nullable|string',
+    ]);
+
+    try {
+        $time24 = date("H:i:s", strtotime($request->appointment_time));
+
+        // Check if a booking already exists with same date and time
+        $existing = Booking::where('appointment_date', $request->appointment_date)
+            ->where('appointment_time', $time24)
+            ->first();
+
+        if ($existing) {
+            return back()->with('error', 'This time slot is already booked. Please choose a different time.');
         }
+
+        DB::transaction(function () use ($request, $time24) {
+            $data = $request->all();
+            $data['appointment_time'] = $time24;
+
+            $booking = Booking::create($data);
+
+            Mail::send('front.email.booking-confirmation', ['booking' => $booking], function ($message) {
+                $message->to('anjalibhorhari008@gmail.com')
+                        ->subject('New Grooming Appointment Booking');
+            });
+        });
+
+        return back()->with('success', 'Your booking has been submitted!');
+    } catch (\Exception $e) {
+        Log::error('Booking failed: ' . $e->getMessage());
+        return back()->with('error', 'Booking failed. Please try again later.');
     }
+}
+
 
    public function groomingServiceDetails($slug)
     {
@@ -213,4 +267,6 @@ class HomeController extends Controller
         $servicesList = Service::latest()->get();
         return view('front.grooming-service-details', compact('service','servicesList'));
     }
+
+  
 }
