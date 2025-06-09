@@ -42,8 +42,6 @@ Route::get('/available-puppies-search', [HomeController::class, 'searchPuppies']
 Route::get('/pet-details/{city}', [HomeController::class, 'show'])->name('pet.details');
 Route::get('/available-puppies-details/{breed}/{city}', [HomeController::class, 'available_puppies_details'])->name('available-puppies-details');
 
-Route::get('/grooming-services', [HomeController::class, 'groomingServices'])->name('grooming.services');
-
 
 Route::get('/blogs', [HomeController::class, 'blogs'])->name('blogs');
 Route::get('/blog-Details/{id}', [HomeController::class, 'blogsDetails'])->name('blog.details');
@@ -56,6 +54,8 @@ Route::post('/contact', [HomeController::class, 'send'])->name('contact.send');
 Route::post('/enquiry-store', [EnquiryController::class, 'store'])->name('enquiry.store');
 
 
+Route::get('/grooming-services', [HomeController::class, 'groomingServices'])->name('grooming.services');
+Route::get('/grooming-service/{slug}', [HomeController::class, 'groomingServiceDetails'])->name('grooming.service.details');
 Route::post('/book-appointment', [HomeController::class, 'submitBooking'])->name('booking.submit');
 
 Route::group(['prefix' => 'admin','middleware' => 'checkRole'], function(){
@@ -111,9 +111,19 @@ Route::group(['prefix' => 'account', 'controller' => AccountController::class], 
         Route::any('/store-blog/{blogs}/edit', 'editBlog')->name('account.editBlog');
         Route::put('/store-blog/{blogs}', 'updateBlog')->name('account.updateBlog');
         Route::any('/store-blog/{blogs}/delete', 'destroyBlog')->name('account.destroyBlog');
+        
         Route::any('/enquiry-list', 'enquiryList')->name('account.enquiryList');
 
         Route::any('/booking-list', 'bookingList')->name('account.bookingList');
+
+        Route::any('/create-service', 'createService')->name('account.createServices');
+        Route::any('/save-service', 'saveService')->name('account.saveService');
+        Route::any('/service-list', 'serviceList')->name('account.serviceList');
+        Route::any('/store-service/{service}/edit', 'editService')->name('account.editService');
+        Route::put('/store-service/{service}', 'updateService')->name('account.updateService');
+        Route::any('/store-service/{service}/delete', 'destroyService')->name('account.destroyService');
+       
+        
 
 
     });

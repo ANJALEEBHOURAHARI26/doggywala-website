@@ -77,7 +77,6 @@
         </div>
     </div>
 </section>
-@endsection
 <script>
     function deleteBlog(id) {
         if (confirm("Are you sure you want to delete blog?")) {
@@ -85,4 +84,6 @@
         }
     }
 </script>
+@endsection
+
 

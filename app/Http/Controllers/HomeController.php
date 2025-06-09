@@ -7,12 +7,14 @@ use App\Models\SavedPet;
 use Illuminate\Http\Request;
 use App\Models\Blog;
 use App\Models\Review;
+use App\Models\Service;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Booking;
 use App\Mail\BookingConfirmation;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 
 class HomeController extends Controller
@@ -22,33 +24,10 @@ class HomeController extends Controller
         $featuredPets = Pets::whereIn('id', [1, 3, 5, 7])->get();
         $latestPets = Pets::latest()->take(4)->get();
         $reviews = Review::latest()->get();
+        $services = Service::latest()->take(3)->get();
 
-        return view('front.home', compact('featuredPets', 'latestPets','reviews'));
+        return view('front.home', compact('featuredPets', 'latestPets','reviews','services'));
     }
-
-    // public function search(Request $request)
-    // {
-    //     $query = Pets::query();
-
-    //     // Apply search filters if they are provided
-    //     if ($request->has('name') && !empty($request->input('name'))) {
-    //         $query->where('name', 'like', '%' . $request->input('name') . '%');
-    //     }
-
-    //     if ($request->has('type') && !empty($request->input('type'))) {
-    //         $query->where('type', 'like', '%' . $request->input('type') . '%');
-    //     }
-
-    //     if ($request->has('location') && !empty($request->input('location'))) {
-    //         $query->where('location', 'like', '%' . $request->input('location') . '%');
-    //     }
-
-    //     // Get the filtered pets
-    //     $pets = $query->get();
-
-    //     // Return the view with pets data
-    //     return view('front.account.index', compact('pets'));
-    // }
 
     public function savePet(Request $request)
     {
@@ -172,7 +151,9 @@ class HomeController extends Controller
 
     public function groomingServices()
     {
-        return view('front.grooming-services');
+        $services = Service::latest()->take(3)->get();
+        $servicesList = Service::latest()->get();
+        return view('front.grooming-services',compact('services','servicesList'));
     }
 
     public function store(Request $request)
@@ -192,7 +173,7 @@ class HomeController extends Controller
         return redirect()->back()->with('success', 'Thank you for your review!');
     }
 
-    public function submitBooking(Request $request)
+   public function submitBooking(Request $request)
     {
         $request->validate([
             'name' => 'required|string',
@@ -205,10 +186,14 @@ class HomeController extends Controller
 
         try {
             DB::transaction(function () use ($request) {
-                // Step 1: Save booking
-                $booking = Booking::create($request->all());
 
-                // Step 2: Send email
+                $time24 = date("H:i:s", strtotime($request->appointment_time));
+
+                $data = $request->all();
+                $data['appointment_time'] = $time24;
+
+                $booking = Booking::create($data);
+
                 Mail::send('front.email.booking-confirmation', ['booking' => $booking], function ($message) {
                     $message->to('anjalibhorhari008@gmail.com')
                             ->subject('New Grooming Appointment Booking');
@@ -217,9 +202,15 @@ class HomeController extends Controller
 
             return back()->with('success', 'Your booking has been submitted!');
         } catch (\Exception $e) {
-            // Log and show error message
             Log::error('Booking failed (email/db): ' . $e->getMessage());
             return back()->with('error', 'Booking failed. Please try again later.');
         }
+    }
+
+   public function groomingServiceDetails($slug)
+    {
+        $service = Service::where('slug', $slug)->firstOrFail();
+        $servicesList = Service::latest()->get();
+        return view('front.grooming-service-details', compact('service','servicesList'));
     }
 }

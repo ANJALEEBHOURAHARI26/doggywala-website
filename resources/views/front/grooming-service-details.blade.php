@@ -10,7 +10,7 @@
   box-sizing: border-box;
 }
 
-.section-02 {
+.section-020 {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -21,6 +21,9 @@
   position: relative;
 }
 
+section.section-020 {
+    height: 89%;
+}
 h1.slide__text-heading {
   font-size: 2.5rem;
   font-weight: 700;
@@ -88,78 +91,91 @@ p {
   background-size: 50px 50px;
   filter: invert(20%) sepia(100%) saturate(500%) hue-rotate(150deg); /* example color tweak */
 }
- .read-more-btn {
-    color: #007bff; /* Bootstrap primary */
-    font-weight: 500;
-  }
 
-  .read-more-btn:hover {
-    text-decoration: underline;
-    color: #0056b3;
-  }
+.read-more-btn {
+  color: #007bff; 
+  font-weight: 500;
+}
+
+.read-more-btn:hover {
+  text-decoration: underline;
+  color: #0056b3;
+}
 
 </style>
 
 @section('main')
-<section class="section-02" style="background-image: url('{{ asset('assets/images/pet-sitters-dog-boarding-dog-walkers-nearby.jpg') }}');">
+<section class="section-020" style="background-image: url('{{ asset('uploads/services/' . $service->image) }}');">
   <div class="container">
     <div class="row">
       <div class="col-lg-8 text-white">
-        <h1 class="display-4 fw-bold mt-5">Welcome to Premium Pet Grooming</h1>
-        <p class="lead">Get the best grooming services for your adorable pets. Book an appointment today!</p>
+        <h1 class="display-4 fw-bold mt-5">{{ $service->title }}</h1>
+        <p class="lead">Experience top-notch grooming with our {{ $service->name }} service starting at ₹{{ $service->price }}!</p>
       </div>
     </div>
   </div>
 </section>
 
+<!-- Service Detail Section -->
 <section class="py-5 bg-light">
   <div class="container">
-    <h2 class="text-center fw-bold mb-5" style="color:#1f2e4d;">Our Grooming Services</h2>
 
-    @foreach($services as $index => $service)
-    <div class="row align-items-center mb-5 {{ $index % 2 == 1 ? 'flex-md-row-reverse' : '' }}">
-      
-      {{-- Image --}}
-      <div class="col-md-6 mb-4 mb-md-0">
+    {{-- Centered Service Name --}}
+    <div class="row mb-4">
+      <div class="col-12 text-center">
+        <h2 class="fw-bold" style="color:#1f2e4d;">{{ $service->name }}</h2>
+      </div>
+    </div>
+
+     @php
+      $plainDescription = trim(strip_tags($service->description));
+      $words = preg_split('/\s+/', $plainDescription);
+      $firstWords = implode(' ', array_slice($words, 0, 100)); // First 100 words
+      $remainingWords = implode(' ', array_slice($words, 100)); // From 101 to end
+    @endphp
+
+
+    <div class="row align-items-start">
+      {{-- Left: Image --}}
+      <div class="col-md-6">
         <img 
           src="{{ asset('uploads/services/' . $service->image) }}" 
           alt="{{ $service->name }}" 
-          class="img-fluid rounded shadow w-100"
-          style="max-height: 350px; object-fit: cover;"
+          class="img-fluid rounded shadow"
+          style="max-height: 400px; object-fit: cover; width: 100%;"
         >
       </div>
 
-      {{-- Content --}}
       <div class="col-md-6">
-        <h3 class="fw-bold mb-3" style="color:#1f2e4d;">{{ $service->name }}</h3>
+        <h4 class="text-success mb-2">Price: ₹{{ $service->price }}</h4>
+        <h5 class="mb-3">{{ $service->title }}</h5>
 
-        {{-- Description limited to 10 lines visually --}}
-        <div style="
-          max-height: 11.5em; 
-          overflow: hidden; 
-          text-overflow: ellipsis; 
-          display: -webkit-box; 
-          -webkit-line-clamp: 10; 
-          -webkit-box-orient: vertical;
-        ">
-          {!! nl2br(e($service->description)) !!}
-        </div>
-
-        {{-- View Details Button --}}
-       <a href="{{ route('grooming.service.details', $service->slug) }}" class="btn btn-outline-primary mt-3">
-          View Details
-      </a>
-
+        <p>{{ $firstWords }}</p>
       </div>
-
     </div>
-    @endforeach
+
+    @if(!empty($remainingWords))
+      <div class="row mt-4">
+        <div class="col-12">
+          <p>{{ $remainingWords }}</p>
+
+          <a href="#bookingFormSection" class="btn btn-primary mt-3">
+            Book This Service
+          </a>
+        </div>
+      </div>
+    @else
+      <div class="row mt-4">
+        <div class="col-12 text-center">
+          <a href="#bookingFormSection" class="btn btn-primary mt-3">
+            Book This Service
+          </a>
+        </div>
+      </div>
+    @endif
 
   </div>
 </section>
-
-
-
 
 
 <section class="py-5" style="background-color: #f9fff9;">
@@ -180,11 +196,10 @@ p {
                         <div class="card-body">
                           <img src="{{ asset('uploads/services/' . $service->image) }}" alt="{{ $service->name }}" class="img-fluid rounded mb-3">
                           <h5 class="card-title">{{ $service->name }}</h5>
-                         <p class="card-text">
+                          <p class="card-text">
                             {{ \Illuminate\Support\Str::limit($service->description, 100) }}
-                            <a href="{{ route('grooming.service.details', $service->slug) }}" class="read-more-btn">Read More</a>
+                            <a href="{{ route('grooming.service.details', $service->slug) }}" class="text-primary text-decoration-none">Read More</a>
                           </p>
-
                         </div>
                       </a>
                     </div>
@@ -206,6 +221,10 @@ p {
         <span class="visually-hidden">Next</span>
       </button>
     </div>
+
+    <div class="text-center mt-4">
+      <a href="#" class="btn btn-primary">View All Services</a>
+    </div>
   </div>
 </section>
 
@@ -213,7 +232,7 @@ p {
 
 
 
-<section class="py-5" style="background-color: #f3f6fa;">
+<section class="py-5" style="background-color: #f3f6fa;" id="bookingFormSection">
   <div class="container">
     <h2 class="text-center fw-bold mb-4" style="color: #1f2e4d;">Book a Grooming Appointment</h2>
     <div class="row justify-content-center">
@@ -308,6 +327,4 @@ p {
   });
 
 </script>
-
-
 @endsection

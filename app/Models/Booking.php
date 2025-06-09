@@ -17,4 +17,9 @@ class Booking extends Model
         'appointment_time',
         'message',
     ];
+
+   public function serviceDetail()
+    {
+        return $this->belongsTo(Service::class, 'service');
+    }
 }

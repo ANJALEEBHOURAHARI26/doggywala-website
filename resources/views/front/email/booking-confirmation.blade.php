@@ -70,7 +70,7 @@
         <div class="email-content">
             <p><span class="label">Name:</span> <span class="highlight">{{ $booking->name }}</span></p>
             <p><span class="label">Phone:</span> <span class="highlight">{{ $booking->phone }}</span></p>
-            <p><span class="label">Service:</span> <span class="highlight">{{ $booking->service }}</span></p>
+            <p><span class="label">Service:</span> <span class="highlight">{{ $booking->serviceDetail->name }}</span></p>
             <p><span class="label">Date:</span> <span class="highlight">{{ $booking->appointment_date }}</span></p>
             <p><span class="label">Time:</span> <span class="highlight">{{ $booking->appointment_time }}</span></p>
 

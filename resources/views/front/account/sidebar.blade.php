@@ -22,7 +22,7 @@
                 <a href="{{ route('account.profile') }}">Account Settings</a>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                <a href="{{ route('account.createPet') }}">List a Pet</a>
+                <a href="{{ route('account.createPet') }}">Pet</a>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                 <a href="{{ route('account.savePet') }}">My Pets</a>
@@ -32,6 +32,12 @@
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                 <a href="{{ route('account.blogList') }}">Blog List</a>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                <a href="{{ route('account.createServices') }}">Services</a>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                <a href="{{ route('account.serviceList') }}">Services List</a>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                 <a href="{{ route('account.enquiryList') }}">Enquiry List</a>

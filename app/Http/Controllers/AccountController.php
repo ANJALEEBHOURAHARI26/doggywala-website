@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Mail;
 use App\Models\Blog;
 use App\Models\Enquiry;
 use App\Models\Booking;
+use App\Models\Service;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
 
 class AccountController extends Controller
@@ -440,7 +442,7 @@ class AccountController extends Controller
         $blog->user_id = Auth::id(); 
         $blog->title = $request->title;
         $blog->description = $request->description;
-        $blog->image = $imageName; // only file name stored
+        $blog->image = $imageName;
         $blog->save();
 
         return redirect()->route('account.blogList')->with('success','Blog post created successfully!');
@@ -492,7 +494,7 @@ class AccountController extends Controller
             }
 
             $image->move($destinationPath, $imageName);
-            $blog->image = $imageName; // only file name stored
+            $blog->image = $imageName; 
         }
 
         $blog->save();
@@ -542,6 +544,103 @@ class AccountController extends Controller
 
         return view('front.account.booking-list', compact('bookings'));
     }
+
+    public function  createService()
+    {
+        return view('front.account.pet.service');
+    }
+
+    public function saveService(Request $request)
+    {
+        $request->validate([
+            'name'        => 'required|string|max:255',
+            'title'       => 'required|string|max:255',
+            'description' => 'required|string',
+            'image'       => 'required|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'price'       => 'required|numeric',
+            'status'      => 'required|boolean',
+        ]);
+
+        $slug = Str::slug($request->name);
+        $count = Service::where('slug', $slug)->count();
+        if ($count > 0) {
+            $slug .= '-' . time();
+        }
+
+        $imageName = null;
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = time() . '_' . $image->getClientOriginalName();
+            $image->move(public_path('uploads/services'), $imageName);
+        }
+
+        $service = new Service();
+        $service->name        = $request->name;
+        $service->title      = $request->title;
+        $service->slug        = $slug;
+        $service->description = $request->description;
+        $service->price       = $request->price;
+        $service->status      = $request->status;
+        $service->image       = $imageName;
+        $service->created_by  = auth()->id();
+        $service->save();
+        return redirect()->route('account.serviceList')->with('success', 'Service created successfully!');
+
+    }
+
+    public function serviceList()
+    {
+        $services = Service::orderBy('id', 'desc')->get();
+        return view('front.account.pet.service-list', compact('services'));
+    }
+
+    public function editService(Service $service)
+    {
+        return view('front.account.pet.edit-service', compact('service'));
+    }
+
+    public function updateService(Request $request, Service $service)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'price' => 'nullable|numeric',
+            'status' => 'required|boolean',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+        ]);
+
+        $service->name = $request->name;
+        $service->title = $request->title;
+        $service->description = $request->description;
+        $service->price = $request->price;
+        $service->status = $request->status;
+
+        // Image update
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $filename = time() . '_' . $image->getClientOriginalName();
+            $image->move(public_path('uploads/services'), $filename);
+            $service->image = $filename;
+        }
+
+        $service->save();
+
+        return redirect()->route('account.serviceList')->with('success', 'Service updated successfully.');
+    }
+
+    public function destroyService($id) 
+    {
+        $service = Service::findOrFail($id);
+
+        File::delete(public_path('uploads/services/'.$service->image));
+        $service->delete();
+
+        return redirect()->route('account.serviceList')->with('success','Blog deleted successfully.');
+    }
+
+
+
 
 
 }
