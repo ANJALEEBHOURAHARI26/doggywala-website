@@ -232,67 +232,7 @@ p {
 
 
 
-<section class="py-5" style="background-color: #f3f6fa;" id="bookingFormSection">
-  <div class="container">
-    <h2 class="text-center fw-bold mb-4" style="color: #1f2e4d;">Book a Grooming Appointment</h2>
-    <div class="row justify-content-center">
-      <div class="col-md-8">
 
-        @if(session('success'))
-          <div class="alert alert-success mt-3">
-              {{ session('success') }}
-          </div>
-        @endif
-
-        <form id="bookingForm" action="{{ route('booking.submit') }}" method="POST" onsubmit="handleSubmit(this)">
-          @csrf
-
-          <div class="mb-3">
-            <label for="name" class="form-label">Your Name <span class="text-danger">*</span></label>
-            <input type="text" class="form-control" id="name" name="name" required>
-          </div>
-
-          <div class="mb-3">
-            <label for="phone" class="form-label">Phone Number <span class="text-danger">*</span></label>
-            <input type="tel" class="form-control" id="phone" name="phone" required pattern="[0-9]{10}" maxlength="10" minlength="10" title="Please enter a 10-digit phone number">
-          </div>
-
-          <div class="mb-3">
-            <label for="service" class="form-label">Select Service <span class="text-danger">*</span></label>
-            <select class="form-select" id="service" name="service" required>
-              <option value="" disabled selected>-- Select Service--</option>
-              @foreach($servicesList as $servicesLists)
-              <option value="{{$servicesLists->id}}">{{$servicesLists->name}}</option>
-              @endforeach
-            </select>
-          </div>
-
-          <div class="mb-3">
-            <label for="appointment_date" class="form-label">Select Date <span class="text-danger">*</span></label>
-            <input type="text" class="form-control" id="appointment_date" name="appointment_date" required>
-          </div>
-
-          <div class="mb-3">
-            <label for="appointment_time" class="form-label">Select Time <span class="text-danger">*</span></label>
-            <input type="text" class="form-control" id="appointment_time" name="appointment_time" required>
-          </div>
-
-
-          <div class="mb-3">
-            <label for="message" class="form-label">Message (Optional)</label>
-            <textarea class="form-control" id="message" name="message" rows="4"></textarea>
-          </div>
-
-          <button type="submit" class="btn btn-success w-100" id="submitBtn">
-            <span id="btnText">Book Now</span>
-            <span id="btnLoader" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
-          </button>
-        </form>
-
-      </div>
-    </div>
-  </div>
-</section>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
 <script>
