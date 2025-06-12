@@ -221,10 +221,6 @@ p {
         <span class="visually-hidden">Next</span>
       </button>
     </div>
-
-    <div class="text-center mt-4">
-      <a href="#" class="btn btn-primary">View All Services</a>
-    </div>
   </div>
 </section>
 
