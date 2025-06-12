@@ -58,7 +58,11 @@ Route::get('/grooming-services', [HomeController::class, 'groomingServices'])->n
 Route::get('/grooming-service/{slug}', [HomeController::class, 'groomingServiceDetails'])->name('grooming.service.details');
 Route::post('/book-appointment', [HomeController::class, 'submitBooking'])->name('booking.submit');
 
-Route::get('/api/available-slots', [BookingController::class, 'getAvailableSlots']);
+// Route::post('/check-availability', [HomeController::class, 'checkAvailability'])->name('booking.check');
+// Route::get('/get-available-slots', [HomeController::class, 'getAvailableSlots']);
+Route::get('/get-dates-and-slots', [BookingController::class, 'getAvailableDatesAndSlots']);
+Route::get('/available-slots/{date}', [HomeController::class, 'getAvailableSlots']);
+
 
 
 Route::group(['prefix' => 'admin','middleware' => 'checkRole'], function(){
