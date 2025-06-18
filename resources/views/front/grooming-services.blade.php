@@ -375,98 +375,122 @@ label.appointmentTime {
 
 <section class="py-5 bg-light">
   <div class="container">
-    <h2 class="text-center fw-bold mb-5" style="color:#1f2e4d;">Our Grooming Services</h2>
+    <h2 class="text-center fw-bold mb-5" style="color:#1f2e4d; font-size: 2.5rem;">Our Premium Grooming Services</h2>
 
-    @foreach($services as $index => $service)
-    <div class="row align-items-center mb-5 {{ $index % 2 == 1 ? 'flex-md-row-reverse' : '' }}">
-      
-      {{-- Image --}}
+    {{-- 1. Dog Bath & Blow Dry --}}
+    <div class="row align-items-center mb-5">
       <div class="col-md-6 mb-4 mb-md-0">
-        <img 
-          src="{{ asset('uploads/services/' . $service->image) }}" 
-          alt="{{ $service->name }}" 
-          class="img-fluid rounded shadow w-100"
-          style="max-height: 350px; object-fit: cover;"
-        >
+        <img src="{{ asset('assets/images/DogBath&BlowDry.jpg') }}" alt="Dog Bath & Blow Dry" class="img-fluid rounded shadow w-100" style="max-height: 400px; object-fit: cover;">
       </div>
-
-      {{-- Content --}}
       <div class="col-md-6">
-        <h3 class="fw-bold mb-3" style="color:#1f2e4d;">{{ $service->name }}</h3>
-
-        {{-- Description limited to 10 lines visually --}}
-        <div style="
-          max-height: 11.5em; 
-          overflow: hidden; 
-          text-overflow: ellipsis; 
-          display: -webkit-box; 
-          -webkit-line-clamp: 10; 
-          -webkit-box-orient: vertical;
-        ">
-          {!! nl2br(e($service->description)) !!}
-        </div>
-
-        {{-- View Details Button --}}
-       <a href="{{ route('grooming.service.details', $service->slug) }}" class="btn btn-outline-primary mt-3">
-          View Details
-      </a>
-
+        <h3 class="fw-bold mb-3" style="color:#1f2e4d; font-size: 1.75rem;">Dog Bath & Blow Dry</h3>
+        <p style="font-size: 1.15rem; line-height: 1.9; color:#555;">
+          Treat your furry companion to a luxurious bath experience. Our gentle dog shampoo and warm water bath remove dirt and odors, while the blow dry and brushing leave their coat shiny and soft. Ideal for regular hygiene and coat care.
+        </p>
+        <!-- <a href="#" class="btn btn-outline-primary mt-3 px-4 py-2">View Details</a> -->
       </div>
-
     </div>
-    @endforeach
+
+    {{-- 2. Haircut & Styling --}}
+    <div class="row align-items-center mb-5 flex-md-row-reverse">
+      <div class="col-md-6 mb-4 mb-md-0">
+        <img src="{{ asset('assets/images/HairCut&styling.jpg') }}" alt="Haircut & Styling" class="img-fluid rounded shadow w-100" style="max-height: 400px; object-fit: cover;">
+      </div>
+      <div class="col-md-6">
+        <h3 class="fw-bold mb-3" style="color:#1f2e4d; font-size: 1.75rem;">Haircut & Styling</h3>
+        <p style="font-size: 1.15rem; line-height: 1.9; color:#555;">
+          From breed-specific cuts to personalized styling, our professional groomers provide precision grooming that keeps your dog looking sharp and feeling comfortable. We tailor each session to your pet’s coat type and personality.
+        </p>
+        <!-- <a href="#" class="btn btn-outline-success mt-3 px-4 py-2">View Details</a> -->
+      </div>
+    </div>
+
+    {{-- 3. Nails, Ears & Hygiene --}}
+    <div class="row align-items-center mb-5">
+      <div class="col-md-6 mb-4 mb-md-0">
+        <img src="{{ asset('assets/images/NailsCuting.jpg') }}" alt="Nails, Ears & Hygiene" class="img-fluid rounded shadow w-100" style="max-height: 400px; object-fit: cover;">
+      </div>
+      <div class="col-md-6">
+        <h3 class="fw-bold mb-3" style="color:#1f2e4d; font-size: 1.75rem;">Nails, Ears & Hygiene</h3>
+        <p style="font-size: 1.15rem; line-height: 1.9; color:#555;">
+          Keep your pet happy, clean, and healthy with our hygiene package. It includes nail clipping to prevent painful cracks, ear cleaning to avoid infections, and hygiene trimming for sensitive areas to maintain overall well-being.
+        </p>
+        <!-- <a href="#" class="btn btn-outline-danger mt-3 px-4 py-2">View Details</a> -->
+      </div>
+    </div>
 
   </div>
 </section>
 
-
-
-
-
 <section class="py-5" style="background-color: #f9fff9;">
-  <div class="container position-relative">
+  <div class="container">
     <h2 class="text-center mb-5 fw-bold" style="color: #1f2e4d;">Our Grooming Services</h2>
 
-    <div id="servicesCarousel" class="carousel slide" data-bs-ride="carousel">
-      <div class="carousel-inner">
-
-        @foreach ($servicesList->chunk(4)->map(fn($chunk) => $chunk->pad(4, null)) as $chunkIndex => $serviceChunk)
-          <div class="carousel-item {{ $chunkIndex == 0 ? 'active' : '' }}">
-            <div class="row g-4">
-              @foreach ($serviceChunk as $service)
-                <div class="col-md-3">
-                  @if ($service)
-                    <div class="card h-100 shadow-sm text-center border-0">
-                      <a href="{{ route('grooming.service.details', $service->slug) }}" style="text-decoration:none; color: inherit;">
-                        <div class="card-body">
-                          <img src="{{ asset('uploads/services/' . $service->image) }}" alt="{{ $service->name }}" class="img-fluid rounded mb-3">
-                          <h5 class="card-title">{{ $service->name }}</h5>
-                         <p class="card-text">
-                            {{ \Illuminate\Support\Str::limit($service->description, 100) }}
-                            <a href="{{ route('grooming.service.details', $service->slug) }}" class="read-more-btn">Read More</a>
-                          </p>
-
-                        </div>
-                      </a>
-                    </div>
-                  @endif
-                </div>
-              @endforeach
+    <div class="row g-4">
+      {{-- Box 1 --}}
+      <div class="col-md-3">
+        <div class="card h-100 shadow-sm text-center border-0">
+          <a href="#" style="text-decoration: none; color: inherit;">
+            <div class="card-body">
+              <img src="{{ asset('assets/images/DogBath&BlowDry.jpg') }}" alt="Dog Bath & Blow Dry" class="img-fluid rounded mb-3">
+              <h5 class="card-title">Dog Bath & Blow Dry</h5>
+              <p class="card-text">
+                Warm water bath, gentle shampoo, blow dry & brushing.
+                <!-- <a href="#" class="read-more-btn">Read More</a> -->
+              </p>
             </div>
-          </div>
-        @endforeach
-
+          </a>
+        </div>
       </div>
 
-      <button class="carousel-control-prev" type="button" data-bs-target="#servicesCarousel" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon"></span>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#servicesCarousel" data-bs-slide="next">
-        <span class="carousel-control-next-icon"></span>
-        <span class="visually-hidden">Next</span>
-      </button>
-    </div>
+      {{-- Box 2 --}}
+      <div class="col-md-3">
+        <div class="card h-100 shadow-sm text-center border-0">
+          <a href="#" style="text-decoration: none; color: inherit;">
+            <div class="card-body">
+              <img src="{{ asset('assets/images/HairCut&styling.jpg') }}" alt="Haircut & Styling" class="img-fluid rounded mb-3">
+              <h5 class="card-title">Haircut & Styling</h5>
+              <p class="card-text">
+                Breed-specific trims & customized grooming styles.
+                <!-- <a href="#" class="read-more-btn">Read More</a> -->
+              </p>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      {{-- Box 3 --}}
+      <div class="col-md-3">
+        <div class="card h-100 shadow-sm text-center border-0">
+          <a href="#" style="text-decoration: none; color: inherit;">
+            <div class="card-body">
+              <img src="{{ asset('assets/images/NailsCuting.jpg') }}" alt="Nails, Ears & Hygiene" class="img-fluid rounded mb-3">
+              <h5 class="card-title">Nails, Ears & Hygiene</h5>
+              <p class="card-text">
+                Nail trim, ear cleaning & hygiene grooming.
+                <!-- <a href="#" class="read-more-btn">Read More</a> -->
+              </p>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      {{-- Box 4 --}}
+       <div class="col-md-3">
+          <div class="card h-100 shadow-sm text-center border-0">
+            <a href="#" style="text-decoration: none; color: inherit;">
+              <div class="card-body">
+                <img src="{{ asset('assets/images/earcleaning.jpg') }}" alt="Ear Cleaning" class="img-fluid rounded mb-3">
+                <h5 class="card-title">Ear Cleaning</h5>
+                <p class="card-text">
+                  Gentle ear cleaning to remove wax, prevent infections, and ensure your pet stays comfortable and healthy.
+                  {{-- <a href="#" class="read-more-btn">Read More</a> --}}
+                </p>
+              </div>
+            </a>
+          </div>
+        </div>
+
   </div>
 </section>
 

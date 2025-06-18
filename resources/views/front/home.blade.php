@@ -238,33 +238,47 @@ h3.border-0.fs-5.pb-2.mb-0 {
 
 
 <section class="py-5 bg-white" id="dog-grooming">
-  <div class="container text-center">
-    <h2 class="mb-4">Dog Grooming Services</h2>
-    <p class="mb-5 text-muted">Give your furry friend the love they deserve with our premium dog grooming packages!</p>
-        @php
-          $icons = ['fa-shower', 'fa-cut', 'fa-paw'];
-          $colors = ['primary', 'success', 'danger'];
-          $buttonText = ['Book Bath', 'Book Styling', 'Book Hygiene'];
-        @endphp
+    <div class="container text-center">
+        <h2 class="mb-4">Dog Grooming Services</h2>
+        <p class="mb-5 text-muted">Give your furry friend the love they deserve with our premium dog grooming packages!</p>
 
         <div class="row g-4">
-            @foreach($services as $index => $service)
-              <div class="col-md-4">
+            <div class="col-md-4">
                 <div class="card h-100 border-0 shadow-sm p-4 text-center">
-                  <div class="mb-3">
-                    <i class="fa {{ $icons[$index] }} fa-3x text-{{ $colors[$index] }}"></i>
-                  </div>
-                  <h5 class="card-title">{{ $service->name }}</h5>
-                  <p class="card-text">{{ $service->title }}</p>
-                  <a href="{{ route('grooming.services') }}" class="btn btn-outline-{{ $colors[$index] }} mt-3">
-                    {{ $buttonText[$index] }}
-                  </a>
+                    <div class="mb-3">
+                        <i class="fa fa-shower fa-3x text-primary"></i>
+                    </div>
+                    <h5 class="card-title">Dog Bath &amp; Blow Dry</h5>
+                    <p class="card-text">Warm water bath, gentle shampoo, blow dry, and brushing — your pup will love it!</p>
+                    <a href="{{ route('grooming.services') }}" class="btn btn-outline-success mt-3">Book Bath</a>
                 </div>
-              </div>
-            @endforeach
+            </div>
+
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm p-4 text-center">
+                    <div class="mb-3">
+                        <i class="fa fa-cut fa-3x text-success"></i>
+                    </div>
+                    <h5 class="card-title">Haircut &amp; Styling</h5>
+                    <p class="card-text">Breed-specific cuts or custom trims. Our groomers make your dog look stylish and neat.</p>
+                    <a href="{{ route('grooming.services') }}" class="btn btn-outline-success mt-3">Book Styling</a>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm p-4 text-center">
+                    <div class="mb-3">
+                        <i class="fa fa-paw fa-3x text-danger"></i>
+                    </div>
+                    <h5 class="card-title">Nails, Ears &amp; Hygiene</h5>
+                    <p class="card-text">Nail clipping, ear cleaning, and hygiene trim for comfort, health, and safety.</p>
+                    <a href="{{ route('grooming.services') }}" class="btn btn-outline-danger mt-3">Book Hygiene</a>
+                </div>
+            </div>
         </div>
-  </div>
+    </div>
 </section>
+
 
 <section class="py-5 bg-light">
   <div class="container">
