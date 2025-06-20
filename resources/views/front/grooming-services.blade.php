@@ -632,13 +632,11 @@ label.appointmentTime {
   </div>
 </section>
 
-  <script>
-// Current date set karo - today se start
+<script>
 let currentDate = new Date();
 let selectedDate = null;
 let selectedTime = null;
 
-// All possible time slots - ye aapke backend se match karna chahiye
 const allTimeSlots = [
     '6:00', '6:30', '7:00', '7:30', '8:00', '8:30', '9:00', '9:30',
     '10:00', '10:30', '11:00', '11:30', '12:00', '12:30', '13:00', '13:30',
@@ -646,12 +644,9 @@ const allTimeSlots = [
     '18:00', '18:30', '19:00', '19:30', '20:00', '20:30', '21:00'
 ];
 
-// Cache for storing fetched availability data
 const availabilityCache = {};
 
-// Get available slots for a date from API
 async function getAvailableSlots(dateStr) {
-    // Check cache first
     if (availabilityCache[dateStr]) {
         return availabilityCache[dateStr];
     }
@@ -683,6 +678,9 @@ async function hasAvailableSlots(dateStr) {
 // Generate calendar with dynamic availability
 async function generateCalendar() {
     const today = new Date();
+    // Set time to start of day for proper comparison
+    today.setHours(0, 0, 0, 0);
+    
     const year = currentDate.getFullYear();
     const month = currentDate.getMonth();
     
@@ -727,18 +725,19 @@ async function generateCalendar() {
         for (let day = 0; day < 7; day++) {
             const date = new Date(startDate);
             date.setDate(startDate.getDate() + (week * 7) + day);
+            // Set time to start of day for proper comparison
+            date.setHours(0, 0, 0, 0);
             
             const dayCell = document.createElement('td');
             dayCell.className = 'day-cell';
             dayCell.textContent = date.getDate().toString().padStart(2, '0');
             
             const dateStr = date.toISOString().split('T')[0];
-            const todayStr = today.toISOString().split('T')[0];
             
             if (date.getMonth() !== month) {
                 dayCell.classList.add('other-month');
-            } else if (date < today && dateStr !== todayStr) {
-                // Past dates - not applicable
+            } else if (date < today) {
+                // Past dates - not applicable (today is selectable)
                 dayCell.classList.add('not-applicable');
             } else {
                 // For current and future dates, check availability
@@ -772,17 +771,17 @@ async function generateCalendar() {
             for (let day = 0; day < 7; day++) {
                 const date = new Date(startDate);
                 date.setDate(startDate.getDate() + (week * 7) + day);
+                date.setHours(0, 0, 0, 0);
                 
                 const dayCell = document.createElement('td');
                 dayCell.className = 'day-cell';
                 dayCell.textContent = date.getDate().toString().padStart(2, '0');
                 
                 const dateStr = date.toISOString().split('T')[0];
-                const todayStr = today.toISOString().split('T')[0];
                 
                 if (date.getMonth() !== month) {
                     dayCell.classList.add('other-month');
-                } else if (date < today && dateStr !== todayStr) {
+                } else if (date < today) {
                     dayCell.classList.add('not-applicable');
                 } else {
                     // Apply availability result
@@ -846,11 +845,29 @@ document.getElementById('appointment_date').addEventListener('click', (e) => {
     }
 });
 
+// Add time field click handler to show time slots for already selected date
+document.getElementById('appointment_time').addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    // If date is already selected, show time slots without clicking date again
+    if (selectedDate) {
+        showTimeSlots(selectedDate);
+    } else {
+        // If no date selected, show calendar first
+        const popup = document.getElementById('calendarPopup');
+        popup.style.display = 'block';
+        generateCalendar();
+    }
+});
+
 // Hide calendar when clicking outside
 document.addEventListener('click', (e) => {
     const popup = document.getElementById('calendarPopup');
-    const input = document.getElementById('appointment_date');
-    if (!popup.contains(e.target) && !input.contains(e.target)) {
+    const dateInput = document.getElementById('appointment_date');
+    const timeInput = document.getElementById('appointment_time');
+    
+    if (!popup.contains(e.target) && !dateInput.contains(e.target) && !timeInput.contains(e.target)) {
         popup.style.display = 'none';
     }
 });
@@ -897,7 +914,17 @@ async function showTimeSlots(date) {
         
         // Update total available count
         document.getElementById('totalAvailable').textContent = availableSlots.length;
-        document.getElementById('selectedTimeDisplay').textContent = '--';
+        document.getElementById('selectedTimeDisplay').textContent = selectedTime || '--';
+        
+        // If there's already a selected time, highlight it
+        if (selectedTime) {
+            const timeSlots = document.querySelectorAll('.time-slot');
+            timeSlots.forEach(slot => {
+                if (slot.textContent === selectedTime) {
+                    slot.classList.add('selected');
+                }
+            });
+        }
         
     } catch (error) {
         console.error('Error loading time slots:', error);
@@ -929,7 +956,7 @@ function confirmTimeSelection() {
         document.getElementById('modalOverlay').style.display = 'none';
         document.getElementById('timeSlotsContainer').style.display = 'none';
         
-        alert(`Appointment selected for ${selectedDate.toDateString()} at ${selectedTime}`);
+        // Removed alert as requested
     } else {
         alert('Please select a time slot first.');
     }
@@ -945,6 +972,7 @@ document.getElementById('modalOverlay').addEventListener('click', () => {
 document.getElementById('prevMonth').addEventListener('click', (e) => {
     e.preventDefault();
     const today = new Date();
+    today.setHours(0, 0, 0, 0);
     const todayMonth = today.getFullYear() * 12 + today.getMonth();
     const currentMonth = currentDate.getFullYear() * 12 + currentDate.getMonth();
     

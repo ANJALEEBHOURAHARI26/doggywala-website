@@ -25,6 +25,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 </head>
 <body data-instant-intensity="mousedown">
+	<style>
+	.city-scroll {
+    max-height: 200px; /* adjust as needed */
+    overflow-y: auto;
+}
+</style>
 <header>
 	<nav class="navbar navbar-expand-lg navbar-light bg-white shadow py-3">
 		<div class="container">
@@ -42,13 +48,13 @@
 					    <a class="nav-link dropdown-toggle" href="#" id="availablePuppiesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 					        Available Puppies
 					    </a>
-					   <ul class="dropdown-menu" aria-labelledby="availablePuppiesDropdown">
+					   <ul class="dropdown-menu city-scroll" aria-labelledby="availablePuppiesDropdown">
 						    <li><a class="dropdown-item" href="{{ route('available-puppies.city', ['city' => 'delhi']) }}">Delhi</a></li>
 						    <li><a class="dropdown-item" href="{{ route('available-puppies.city', ['city' => 'mumbai']) }}">Mumbai</a></li>
 						    <li><a class="dropdown-item" href="{{ route('available-puppies.city', ['city' => 'bangalore']) }}">Bangalore</a></li>
 						    <li><a class="dropdown-item" href="{{ route('available-puppies.city', ['city' => 'hyderabad']) }}">Hyderabad</a></li>
+						    <!-- Add more cities here as needed -->
 						</ul>
-
 					</li>
 
 					<li class="nav-item">
