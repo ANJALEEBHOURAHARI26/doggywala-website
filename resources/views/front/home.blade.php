@@ -91,7 +91,40 @@ h3.border-0.fs-5.pb-2.mb-0 {
     height: 40px;
     background-size: 40px 40px;
   }
-
+   .service-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        }
+        .service-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+        }
+        .boarding-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .daycare-bg { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+        .training-bg { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+        .walking-bg { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }
+        .mating-bg { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); }
+        .transport-bg { background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); }
+        
+        .btn-custom {
+            border-radius: 25px;
+            padding: 10px 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .btn-custom:hover {
+            transform: scale(1.05);
+        }
 </style>
 @section('main')
 @if(session('error'))
@@ -279,6 +312,89 @@ h3.border-0.fs-5.pb-2.mb-0 {
     </div>
 </section>
 
+<section class="py-5 bg-light" id="pet-services">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="display-4 fw-bold mb-3">Our Pet Services</h2>
+            <p class="lead text-muted">Complete care solutions for your beloved pets</p>
+            <div class="mx-auto" style="width: 60px; height: 4px; background: linear-gradient(to right, #667eea, #764ba2); border-radius: 2px;"></div>
+        </div>
+        
+        <div class="row g-3">
+            <!-- Pet Boarding -->
+            <div class="col-lg-2 col-md-4 col-sm-6">
+                <div class="card service-card h-100 border-0 shadow-sm p-3 text-center">
+                    <div class="service-icon boarding-bg mx-auto" style="width: 60px; height: 60px;">
+                        <i class="fas fa-home fa-lg text-white"></i>
+                    </div>
+                    <h6 class="card-title fw-bold mb-2">Pet Boarding</h6>
+                    <p class="card-text text-muted small mb-3">Safe overnight care for your pets</p>
+                    <a href="{{route('pet.boarding')}}" class="btn btn-primary btn-sm btn-custom">Book Now</a>
+                </div>
+            </div>
+
+            <!-- Pet Day Care -->
+            <div class="col-lg-2 col-md-4 col-sm-6">
+                <div class="card service-card h-100 border-0 shadow-sm p-3 text-center">
+                    <div class="service-icon daycare-bg mx-auto" style="width: 60px; height: 60px;">
+                        <i class="fas fa-sun fa-lg text-white"></i>
+                    </div>
+                    <h6 class="card-title fw-bold mb-2">Pet Day Care</h6>
+                    <p class="card-text text-muted small mb-3">Daily care and socialization</p>
+                    <a href="{{route('pet.daycare')}}" class="btn btn-info btn-sm btn-custom">Book Now</a>
+                </div>
+            </div>
+
+            <!-- Pet Training -->
+            <div class="col-lg-2 col-md-4 col-sm-6">
+                <div class="card service-card h-100 border-0 shadow-sm p-3 text-center">
+                    <div class="service-icon training-bg mx-auto" style="width: 60px; height: 60px;">
+                        <i class="fas fa-graduation-cap fa-lg text-white"></i>
+                    </div>
+                    <h6 class="card-title fw-bold mb-2">Pet Training</h6>
+                    <p class="card-text text-muted small mb-3">Professional behavior training</p>
+                    <a href="{{route('pet.training')}}" class="btn btn-success btn-sm btn-custom">Book Now</a>
+                </div>
+            </div>
+
+            <!-- Pet Walking -->
+            <div class="col-lg-2 col-md-4 col-sm-6">
+                <div class="card service-card h-100 border-0 shadow-sm p-3 text-center">
+                    <div class="service-icon walking-bg mx-auto" style="width: 60px; height: 60px;">
+                        <i class="fas fa-walking fa-lg text-white"></i>
+                    </div>
+                    <h6 class="card-title fw-bold mb-2">Pet Walking</h6>
+                    <p class="card-text text-muted small mb-3">Regular exercise and walks</p>
+                    <a href="{{route('pet.walking')}}" class="btn btn-warning btn-sm btn-custom">Book Now</a>
+                </div>
+            </div>
+
+            <!-- Pet Mating -->
+            <div class="col-lg-2 col-md-4 col-sm-6">
+                <div class="card service-card h-100 border-0 shadow-sm p-3 text-center">
+                    <div class="service-icon mating-bg mx-auto" style="width: 60px; height: 60px;">
+                        <i class="fas fa-heart fa-lg text-white"></i>
+                    </div>
+                    <h6 class="card-title fw-bold mb-2">Pet Mating</h6>
+                    <p class="card-text text-muted small mb-3">Professional breeding services</p>
+                    <a href="{{route('pet.mating')}}" class="btn btn-danger btn-sm btn-custom">Book Now</a>
+                </div>
+            </div>
+
+            <!-- Pet Transport -->
+            <div class="col-lg-2 col-md-4 col-sm-6">
+                <div class="card service-card h-100 border-0 shadow-sm p-3 text-center">
+                    <div class="service-icon transport-bg mx-auto" style="width: 60px; height: 60px;">
+                        <i class="fas fa-car fa-lg text-white"></i>
+                    </div>
+                    <h6 class="card-title fw-bold mb-2">Pet Transport</h6>
+                    <p class="card-text text-muted small mb-3">Safe door-to-door transport</p>
+                    <a href="{{route('pet.transport')}}" class="btn btn-secondary btn-sm btn-custom">Book Now</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
 <section class="py-5 bg-light">
   <div class="container">

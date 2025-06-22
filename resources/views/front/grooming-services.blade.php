@@ -490,13 +490,8 @@ label.appointmentTime {
             </a>
           </div>
         </div>
-
   </div>
 </section>
-
-
-
-
 
 <section class="py-5" style="background-color: #f3f6fa;">
   <div class="container">
@@ -525,16 +520,18 @@ label.appointmentTime {
 
           <div class="mb-3">
             <label for="service" class="form-label">Select Service <span class="text-danger">*</span></label>
-            <select class="form-select" id="service" name="service" required>
-              <option value="" disabled selected>-- Select Service--</option>
-              @foreach($servicesList as $servicesLists)
-              <option value="{{$servicesLists->id}}">{{$servicesLists->name}}</option>
-              @endforeach
-            </select>
+            <select class="form-select" id="service" name="service" required="">
+              <option value="" disabled="" selected="">-- Select Service--</option>
+                <option value="All Services">All Services</option>
+                <option value="Nail Clipping">Nail Clipping</option>
+                <option value="Nails Ears Hygiene">Nails Ears Hygiene</option>
+                <option value="Haircut & Styling">Haircut & Styling</option>
+                <option value="Dog Bath & Blow Dry">Dog Bath & Blow Dry</option>
+              </select>
           </div>
 
         
-               <div class="container mt-6">
+      <div class="container mt-6">
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="mb-3 date-input-container">
@@ -669,39 +666,32 @@ async function getAvailableSlots(dateStr) {
     }
 }
 
-// Check if date has any available slots
 async function hasAvailableSlots(dateStr) {
     const availableSlots = await getAvailableSlots(dateStr);
     return availableSlots.length > 0;
 }
 
-// Generate calendar with dynamic availability
 async function generateCalendar() {
     const today = new Date();
-    // Set time to start of day for proper comparison
     today.setHours(0, 0, 0, 0);
     
     const year = currentDate.getFullYear();
     const month = currentDate.getMonth();
     
-    // Update header
     const monthNames = ['JANUARY', 'FEBRUARY', 'MARCH', 'APRIL', 'MAY', 'JUNE',
                        'JULY', 'AUGUST', 'SEPTEMBER', 'OCTOBER', 'NOVEMBER', 'DECEMBER'];
     document.getElementById('currentMonth').textContent = `${monthNames[month]} ${year}`;
     
-    // Disable prev button if current month
     const prevBtn = document.getElementById('prevMonth');
     const todayMonth = today.getFullYear() * 12 + today.getMonth();
     const currentMonth = year * 12 + month;
     prevBtn.disabled = currentMonth <= todayMonth;
     
-    // Get first day of month and number of days
     const firstDay = new Date(year, month, 1);
     const lastDay = new Date(year, month + 1, 0);
     const startDate = new Date(firstDay);
     startDate.setDate(startDate.getDate() - firstDay.getDay());
     
-    // Clear previous dates
     const datesContainer = document.getElementById('calendarDates');
     datesContainer.innerHTML = '';
     
@@ -715,7 +705,6 @@ async function generateCalendar() {
     loadingRow.appendChild(loadingCell);
     datesContainer.appendChild(loadingRow);
     
-    // Generate 6 weeks of dates
     const datePromises = [];
     const dateElements = [];
     
@@ -756,14 +745,11 @@ async function generateCalendar() {
         dateElements.push({ row: row });
     }
     
-    // Wait for all availability checks to complete
     try {
         const availabilityResults = await Promise.all(datePromises);
         
-        // Clear loading indicator
         datesContainer.innerHTML = '';
         
-        // Apply availability results
         let resultIndex = 0;
         for (let week = 0; week < 6; week++) {
             const row = document.createElement('tr');
@@ -816,23 +802,18 @@ function selectDate(date) {
     selectedDate = date;
     selectedTime = null;
     
-    // Update date input field
     const day = date.getDate().toString().padStart(2, '0');
     const month = (date.getMonth() + 1).toString().padStart(2, '0');
     const year = date.getFullYear();
     document.getElementById('appointment_date').value = `${day}-${month}-${year}`;
     
-    // Clear time field
     document.getElementById('appointment_time').value = '';
     
-    // Hide calendar popup
     document.getElementById('calendarPopup').style.display = 'none';
     
-    // Show time slots modal
     showTimeSlots(date);
 }
 
-// Show/hide calendar popup
 document.getElementById('appointment_date').addEventListener('click', (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -845,23 +826,19 @@ document.getElementById('appointment_date').addEventListener('click', (e) => {
     }
 });
 
-// Add time field click handler to show time slots for already selected date
 document.getElementById('appointment_time').addEventListener('click', (e) => {
     e.preventDefault();
     e.stopPropagation();
     
-    // If date is already selected, show time slots without clicking date again
     if (selectedDate) {
         showTimeSlots(selectedDate);
     } else {
-        // If no date selected, show calendar first
         const popup = document.getElementById('calendarPopup');
         popup.style.display = 'block';
         generateCalendar();
     }
 });
 
-// Hide calendar when clicking outside
 document.addEventListener('click', (e) => {
     const popup = document.getElementById('calendarPopup');
     const dateInput = document.getElementById('appointment_date');
@@ -885,15 +862,12 @@ async function showTimeSlots(date) {
     const dateStr = `${year}-${month.padStart(2, '0')}-${day}`;
     dateDisplay.textContent = `${day}-${month}-${year}`;
     
-    // Show loading
     slotsGrid.innerHTML = '<div style="text-align: center; padding: 20px; grid-column: 1/-1;">Loading time slots...</div>';
     
-    // Show modal first
     overlay.style.display = 'block';
     container.style.display = 'block';
     
     try {
-        // Get available slots for this date from API
         const availableSlots = await getAvailableSlots(dateStr);
         
         // Clear loading message
@@ -902,7 +876,6 @@ async function showTimeSlots(date) {
         if (availableSlots.length === 0) {
             slotsGrid.innerHTML = '<div style="text-align: center; padding: 20px; grid-column: 1/-1; color: #666;">No available time slots for this date</div>';
         } else {
-            // Generate available time slots
             availableSlots.forEach(time => {
                 const slot = document.createElement('div');
                 slot.className = 'time-slot';
@@ -912,11 +885,9 @@ async function showTimeSlots(date) {
             });
         }
         
-        // Update total available count
         document.getElementById('totalAvailable').textContent = availableSlots.length;
         document.getElementById('selectedTimeDisplay').textContent = selectedTime || '--';
         
-        // If there's already a selected time, highlight it
         if (selectedTime) {
             const timeSlots = document.querySelectorAll('.time-slot');
             timeSlots.forEach(slot => {
@@ -934,41 +905,33 @@ async function showTimeSlots(date) {
 }
 
 function selectTime(time, element) {
-    // Remove previous selection
     document.querySelectorAll('.time-slot').forEach(slot => {
         slot.classList.remove('selected');
     });
     
-    // Select current time
     element.classList.add('selected');
     selectedTime = time;
     
-    // Update display
     document.getElementById('selectedTimeDisplay').textContent = time;
 }
 
 function confirmTimeSelection() {
     if (selectedTime && selectedDate) {
-        // Update time field
         document.getElementById('appointment_time').value = selectedTime;
         
-        // Hide modal
         document.getElementById('modalOverlay').style.display = 'none';
         document.getElementById('timeSlotsContainer').style.display = 'none';
         
-        // Removed alert as requested
     } else {
         alert('Please select a time slot first.');
     }
 }
 
-// Close modal when clicking overlay
 document.getElementById('modalOverlay').addEventListener('click', () => {
     document.getElementById('modalOverlay').style.display = 'none';
     document.getElementById('timeSlotsContainer').style.display = 'none';
 });
 
-// Navigation buttons
 document.getElementById('prevMonth').addEventListener('click', (e) => {
     e.preventDefault();
     const today = new Date();
@@ -989,16 +952,13 @@ document.getElementById('nextMonth').addEventListener('click', (e) => {
     generateCalendar();
 });
 
-// Function to refresh availability for a specific date (useful after booking)
 async function refreshDateAvailability(dateStr) {
     // Clear cache for this date
     delete availabilityCache[dateStr];
     
-    // Regenerate calendar to show updated availability
     await generateCalendar();
 }
 
-// Function to clear all cached availability data
 function clearAvailabilityCache() {
     Object.keys(availabilityCache).forEach(key => delete availabilityCache[key]);
 }
@@ -1008,7 +968,6 @@ document.addEventListener('DOMContentLoaded', function() {
     generateCalendar();
 });
 
-// Optional: Add error handling for network issues
 window.addEventListener('online', function() {
     console.log('Network connection restored');
     clearAvailabilityCache();

@@ -275,5 +275,35 @@ class HomeController extends Controller
             ], 500);
         }
     }
+
+    public function boarding()
+    {
+        return view('front.boarding');
+    }
+
+    public function daycare()
+    {
+        return view('front.daycare');
+    }
+
+    public function training()
+    {
+        return view('front.training');
+    }
+
+    public function walking()
+    {
+        return view('front.walking');
+    }
+
+    public function mating()
+    {
+        return view('front.mating');
+    }
+
+    public function transport()
+    {
+        return view('front.transport');
+    }
   
 }

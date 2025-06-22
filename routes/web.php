@@ -65,6 +65,14 @@ Route::get('/available-slots/{date}', [HomeController::class, 'getAvailableSlots
 
 
 
+// Pet Services Routes
+Route::get('/pet-boarding', [HomeController::class, 'boarding'])->name('pet.boarding');
+Route::get('/pet-daycare', [HomeController::class, 'daycare'])->name('pet.daycare');
+Route::get('/pet-training', [HomeController::class, 'training'])->name('pet.training');
+Route::get('/pet-walking', [HomeController::class, 'walking'])->name('pet.walking');
+Route::get('/pet-mating', [HomeController::class, 'mating'])->name('pet.mating');
+Route::get('/pet-transport', [HomeController::class, 'transport'])->name('pet.transport');
+
 Route::group(['prefix' => 'admin','middleware' => 'checkRole'], function(){
     Route::get('/dashboard',[DashboardController::class,'index'])->name('admin.dashboard');
     Route::get('/users',[UserController::class,'index'])->name('admin.users');
